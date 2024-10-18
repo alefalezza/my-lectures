@@ -31,6 +31,43 @@ Installazione consigliata
     - segui le istruzioni
   - `volta pin node`: imposta la versione corrente di Node.js
 
+--
+
+# Monorepo (npm workspaces)
+
+Node.js permette di raggrupare diversi progetti in un unico repository git
+
+```
+repository-root
+  - /first-package
+    - package.json <- package di una applicazine
+  - /second-package
+    - package.json
+  - package.json <- package principale
+```
+
+--
+
+## Package principale
+
+```json
+{
+  ...
+  "workspaces": ["first-package", "second-package],
+  ...
+}
+```
+
+--
+
+## Usare npm in un monorepo
+
+```bash
+npm run script -w first-package
+```
+
+Esegue un comando in un determinato pacchetto del monorepo
+
 ---
 
 # Ripasso di javascript
@@ -110,6 +147,35 @@ const proprieta1 = myObject["proprieta1"];
 const proprieta2 = myObject.proprieta2;
 ```
 
+--
+
+## {Destructuring}
+
+Estrae una o più proprietà di un oggetto e le assegna a delle variabili
+
+```js
+const { inputPath, url, postId, tags, ...postContent } = apiPost;
+```
+
+--
+
+## ...Spread
+
+```js
+const oldObject = {
+  "key1": "first value",
+  "key2": "second value",
+  "key3": "third value"
+};
+
+const myObject = {
+  "key0": "zeroth value",
+  ...oldObject
+};
+
+// > myObject: Object { key0: "zeroth value", key1: "first value", key2: "second value", key3: "third value" }
+```
+
 ---
 
 ## Array
@@ -122,6 +188,47 @@ Accedere al valore in una determinata posizione:
 
 ```js
 const primoElementoDellArray = myArray[0]; // "valore 1"
+```
+
+--
+
+## [Destructuring]
+
+Estrae uno o più elementi di un array e assegnarli ad una variabile
+
+```js
+const originalArray = ["primo", "secondo", 3];
+
+// destructuring
+const [primoElemento, secondoElemento, terzoElemento] = originalArray;
+
+// > primoElemento === "primo"; 
+// > secondoElemento === "secondo"; 
+// > terzoElemento === 3
+```
+
+--
+
+## [Destructuring]
+
+```js
+const originalArray = ["primo", "secondo", 3];
+
+// non devi per forza estrarre tutti gli elementi
+const [primoElemento, , terzoElemento] = originalArray;
+
+// > primoElemento === "primo"; terzoElemento === 3
+```
+
+--
+
+## Spread...
+
+```js
+const myArray = [ 4, 5, 6 ];
+const myMergedArray = [ 1, 2, 3, ...myArray ];
+
+// > Array(6) [ 1, 2, 3, 4, 5, 6 ]
 ```
 
 --
@@ -506,17 +613,36 @@ const user: User = {
 ```js
 // a.js
 
-export const myFunction = () => {
+export const myFunction = () => {/* */}
+export const myVariable = "value";
+```
+
+```js
+// b.js
+// posso importare una o più variabili esportate da un file con export multipli
+import { myFunction, myVariable } from "./a.js"
+
+myFunction(myVariable);
+```
+
+--
+
+## Export default
+
+```js
+// a.js
+
+export default myFunction = () => {
   // ...
 }
 ```
 
 ```js
 // b.js
+// posso assegnare il default alla variabile che voglio
+import myRENAMEDFunction from "./a.js"
 
-import {myFunction} from "./a.js"
-
-myFunction();
+myRENAMEDFunction();
 ```
 
 ---
@@ -607,6 +733,5 @@ router.get("/api/exams", (ctx) => {
     description: "Esempio di risposta api"
   };
 });
-
 
 ```
