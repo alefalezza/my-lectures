@@ -357,3 +357,84 @@ import { Page } from './Page.jsx'
 const root = createRoot(document.getElementById('app'));
 root.render(<Page />);
 ```
+
+---
+
+## Librerie
+
+--
+
+Utilizzare una libreria di componenti (UI Kit): [MUI](https://mui.com/joy-ui/getting-started/)
+
+```tsx
+export const Header: React.FC = () => {
+  return (
+    <Stack
+      direction="row"
+      spacing={2}
+      sx={{
+        justifyContent: "space-between",
+        alignItems: "center",
+        paddingTop: "16px",
+      }}
+    >
+      <img src="/logo.svg" height={50} />
+      <Stack direction="row" spacing={2}>
+        <List role="menubar" orientation="horizontal">
+          <ListItem role="none">
+            <ListItemButton role="menuitem" component="a">
+              Gestisci gli studenti
+            </ListItemButton>
+          </ListItem>
+        </List>
+        <Avatar />
+      </Stack>
+    </Stack>
+  );
+};
+```
+
+--
+
+Utilizzare una libreria per il routing: 
+[React Router](https://reactrouter.com/en/main)
+
+```tsx
+function App() {
+  return (
+    <BrowserRouter basename="/">
+      <Routes>
+        <Route path="/" element={<Layout />}>
+          <Route index element={<Root />} />
+
+          {/* Teacher */}
+          <Route path="teacher" element={<TeacherGuard />}>
+            <Route index element={<Exams />} />
+            <Route path="exam" element={<AddExam />} />
+            <Route path="exam/:id" element={<EditExam />} />
+            <Route path="subscriptions" element={<Subscriptions />} />
+            <Route path="subscriptions/:date" element={<SessionReport />} />
+            <Route
+              path="subscriptions/:date/:id"
+              element={<SubscriptionReport />}
+            />
+          </Route>
+
+          {/* Student */}
+          <Route path="student" element={<StudentGuard />}>
+            <Route index element={<MySubscriptions />} />
+            <Route path="subscribe/:id" element={<Subscribe />} />
+            <Route
+              path="subscriptions/:date/:id"
+              element={<SubscriptionReport />}
+            />
+          </Route>
+
+          {/* Login */}
+          <Route path="login" element={<Login />} />
+        </Route>
+      </Routes>
+    </BrowserRouter>
+  );
+}
+```
