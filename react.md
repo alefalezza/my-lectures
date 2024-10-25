@@ -96,7 +96,7 @@ function MyComponent(props) {
 }
 ```
 
-- props
+- gli attributi in react si chiamano **props**
 
 
 --
@@ -116,13 +116,15 @@ const Page = () => (
 );
 ```
 
+- composition
+
 ---
 
 ## Reactive
 
 --
 
-```jsx  {data-trim data-line-numbers="|2"}
+```jsx  {data-trim data-line-numbers="|2-6"}
 <Search 
   onSearch={async (searchQuery) => {
     const searchResults = await 
