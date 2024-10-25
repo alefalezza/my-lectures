@@ -1,0 +1,872 @@
+<!doctype html>
+<html lang="en">
+
+<head>
+  <meta charset="utf-8">
+
+  <title>Reveal JS presentation</title>
+
+  <meta name="description" content="A framework for easily creating beautiful presentations using HTML">
+  <meta name="author" content="Hakim El Hattab">
+
+  <meta name="apple-mobile-web-app-capable" content="yes">
+  <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
+
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+  <link rel="stylesheet" href="libs/reveal.js/4.3.1/reset.css">
+  <link rel="stylesheet" href="libs/reveal.js/4.3.1/reveal.css">
+
+  <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/font-awesome/4.5.0/css/font-awesome.min.css">
+
+  <!-- highlight Theme -->
+  
+  <link rel="stylesheet" href="libs/highlight.js/11.3.1/styles/github.min.css">
+  
+	
+		
+	<link rel="stylesheet" href="libs/reveal.js/4.3.1/plugin/chalkboard/style.css">
+	
+	
+	
+  <link rel="stylesheet" href="libs/reveal.js/4.3.1/plugin/customcontrols/style.css">
+  
+	
+
+
+
+  <!-- Revealjs Theme -->
+  
+  <link rel="stylesheet" href="libs/reveal.js/4.3.1/theme/white.css" id="theme">
+  
+  
+
+  <link rel="stylesheet" href="libs/styles/tasklist.css">
+	<link rel="stylesheet" href="libs/styles/iota.css">
+	<link rel="stylesheet" href="libs/styles/layout.css">
+
+
+  <!-- Revealjs Theme -->
+  
+
+   <!-- css list -->
+	
+
+   
+
+</head>
+
+<body>
+
+   
+
+  <div class="reveal">
+
+    <!-- Any section element inside of this container is displayed as a slide -->
+    <div class="slides">
+
+      
+
+
+    
+        <section >
+            
+            <h1>React</h1>
+<p>ITS 2024-25</p>
+
+            </section>
+    
+
+
+
+    
+    <section>
+        <section >
+            <h2>Le basi</h2>
+
+            </section>
+        
+            <section >
+                <pre><code class="language-html">&lt;html lang=&quot;en&quot;&gt;
+  &lt;head&gt;
+    &lt;meta charset=&quot;UTF-8&quot;&gt;
+    &lt;meta 
+      name=&quot;viewport&quot; 
+      content=&quot;width=device-width, initial-scale=1.0&quot;&gt;
+    &lt;title&gt;Document&lt;/title&gt;
+  &lt;/head&gt;
+  &lt;body&gt;
+    &lt;div class=&quot;content&quot;&gt;Content&lt;/div&gt;
+  &lt;/body&gt;
+&lt;/html&gt;
+</code></pre>
+
+            </section>
+        
+            <section >
+                <pre><code class="language-css">body {
+  padding: 0;
+  margin: 0;
+  background: #fff;
+}
+
+.content {
+  max-width: 900px;
+  margin: 0 auto;
+}
+</code></pre>
+
+            </section>
+        
+            <section >
+                <pre><code class="language-js">const el = document.querySelector('.content');
+
+el.innerHTML = &quot;Contenuto aggiornato&quot;;
+</code></pre>
+<ul>
+<li><code>innerHTML</code> è altamente sconsigliato per ragioni di <strong>sicurezza</strong></li>
+</ul>
+
+            </section>
+        
+
+    </section>
+    
+
+
+
+    
+        <section >
+            
+            <h2>Obiettivi</h2>
+<ul>
+<li>modificare il contenuto della pagina</li>
+<li>reagire agli eventi che si verificano (es: click)</li>
+</ul>
+
+            </section>
+    
+
+
+
+    
+        <section >
+            
+            <h2>React</h2>
+<ul>
+<li>sintassi facile e <strong>sicura</strong> per scrivere HTML usando javascript</li>
+<li><strong>reactive</strong>: permette di modificare l’HTML in seguito ad eventi</li>
+</ul>
+
+            </section>
+    
+
+
+
+    
+    <section>
+        <section >
+            <h2>JSX</h2>
+<ul>
+<li>sintassi simile ad HTML</li>
+<li>in realtà è javascript “mascherato”</li>
+</ul>
+
+            </section>
+        
+            <section >
+                <pre><code class="language-jsx">&lt;MyComponent textVariable=&quot;Contenuto da inserire&quot; /&gt;
+</code></pre>
+<ul>
+<li>Componente con l’iniziale maiuscola</li>
+<li>attributi <code>camelCase</code></li>
+<li>gli attributi possono contenere anche numeri, booleani, funzioni, array…
+<ul>
+<li><em>(in HTML gli attributi sono sempre stringhe)</em></li>
+</ul>
+</li>
+</ul>
+
+            </section>
+        
+            <section >
+                <pre><code class="language-jsx">function MyComponent(props) {
+  return (
+    &lt;div className=&quot;content&quot;&gt;
+      {props.textVariable}
+    &lt;/div&gt;
+  )
+}
+</code></pre>
+<ul>
+<li>gli attributi in react si chiamano <strong>props</strong></li>
+</ul>
+
+            </section>
+        
+            <section >
+                <pre><code class="language-jsx">const Page = () =&gt; (
+  &lt;Layout&gt;
+    &lt;Header&gt;
+      &lt;Logo img=&quot;./company.png&quot; /&gt;
+      &lt;Navigation activePage=&quot;home&quot; /&gt;
+      &lt;Search /&gt;
+    &lt;/Header&gt;
+    &lt;Container&gt;
+      &lt;MyComponent textVariable=&quot;Contenuto principale&quot; /&gt;
+    &lt;/Container&gt;
+  &lt;/Layout&gt;
+);
+</code></pre>
+<ul>
+<li>composition</li>
+</ul>
+
+            </section>
+        
+
+    </section>
+    
+
+
+
+    
+    <section>
+        <section >
+            <h2>Reactive</h2>
+
+            </section>
+        
+            <section >
+                <pre><code data-trim="" data-line-numbers="|2-6" class="language-jsx">&lt;Search 
+  onSearch={async (searchQuery) =&gt; {
+    const searchResults = await 
+      fetch('http://api.com/search?' + searchQuery);
+    setContent(searchResults);
+  }} 
+/&gt;
+</code></pre>
+<ul>
+<li>le funzioni sono first class objects</li>
+<li>posso passare una funzione come parametro di un’altra</li>
+</ul>
+
+            </section>
+        
+            <section >
+                <pre><code data-trim="" data-line-numbers="|1|3" class="language-jsx">const Search = ({ onSearch }) =&gt; {
+  return (
+    &lt;form onSubmit={ () =&gt; onSearch(what) }&gt;
+      Cerca:
+      &lt;input type=&quot;text&quot; name=&quot;what&quot; /&gt;
+    &lt;/form&gt;
+  )
+}
+</code></pre>
+<blockquote>
+<p>pseudo-code: il form non funziona così</p>
+</blockquote>
+
+            </section>
+        
+            <section >
+                <pre><code data-trim="" data-line-numbers="|5" class="language-jsx">&lt;Search 
+  onSearch={async (searchQuery) =&gt; {
+    const searchResults = await 
+      fetch('http://api.com/search?' + searchQuery);
+    setContent(searchResults);
+  }} 
+/&gt;
+</code></pre>
+
+            </section>
+        
+            <section >
+                <pre><code data-trim="" data-line-numbers="|2|8|2|12" class="language-jsx">const Page = () =&gt; {
+  const [content, setContent] = useState(&quot;Contenuto iniziale&quot;);
+  return (
+    &lt;Layout&gt;
+        &lt;Search onSearch={async (searchQuery) =&gt; {
+          const searchResults = await 
+            fetch('http://api.com/search?' + searchQuery);
+          setContent(searchResults);
+        }}/&gt;
+      &lt;/Header&gt;
+      &lt;Container&gt;
+        &lt;MyComponent textVariable={content} /&gt;
+      &lt;/Container&gt;
+    &lt;/Layout&gt;
+  );
+}</code></pre>
+
+            </section>
+        
+            <section >
+                <h2>Approfondimenti</h2>
+<ul>
+<li><a href="https://react.dev/learn">React.dev</a></li>
+</ul>
+
+            </section>
+        
+
+    </section>
+    
+
+
+
+    
+    <section>
+        <section >
+            <h2>Tips</h2>
+<pre><code class="language-jsx">&lt;div&gt;
+  {isLoggedIn ? (
+    &lt;AdminPanel /&gt;
+  ) : (
+    &lt;LoginForm /&gt;
+  )}
+&lt;/div&gt;
+</code></pre>
+<ul>
+<li>operatori ternari per il conditional rendering</li>
+</ul>
+
+            </section>
+        
+            <section >
+                <pre><code class="language-jsx">&lt;div&gt;
+  {isLoggedIn &amp;&amp; &lt;AdminPanel /&gt;}
+&lt;/div&gt;
+</code></pre>
+<ul>
+<li>se non ti serve <code>else</code>, usa l’operatore logico <code>&amp;&amp;</code></li>
+</ul>
+
+            </section>
+        
+            <section >
+                <pre><code class="language-jsx">const listItems = products.map(product =&gt;
+  &lt;li key={product.id}&gt;
+    {product.title}
+  &lt;/li&gt;
+);
+
+return (
+  &lt;ul&gt;{listItems}&lt;/ul&gt;
+);
+</code></pre>
+<ul>
+<li>usa le funzioni degli array</li>
+</ul>
+
+            </section>
+        
+            <section >
+                <pre><code class="language-jsx">function MyButton() {
+  const [count, setCount] = useState(0);
+  return (
+    &lt;button onClick={() =&gt; setCount(count + 1)}&gt;
+      Clicked {count} times
+    &lt;/button&gt;
+  );
+}
+
+export default function MyApp() {
+  return (
+    &lt;MyButton /&gt;
+    &lt;MyButton /&gt;
+  );
+}
+</code></pre>
+<ul>
+<li>ogni componente ha il suo stato</li>
+</ul>
+
+            </section>
+        
+            <section >
+                <pre><code class="language-jsx">function MyButton({count, setCount}) {
+  return (
+    &lt;button onClick={() =&gt; setCount(count + 1)}&gt;
+      Clicked {count} times
+    &lt;/button&gt;
+  );
+}
+
+export default function MyApp() {
+  const [count, setCount] = useState(0);
+  return (
+    &lt;MyButton count={count}, setCount={setCount}/&gt;
+    &lt;MyButton count={count}, setCount={setCount}/&gt;
+  );
+}
+</code></pre>
+<ul>
+<li>stato condiviso tra più componenti</li>
+</ul>
+
+            </section>
+        
+
+    </section>
+    
+
+
+
+    
+    <section>
+        <section >
+            <h2>Errori da evitare</h2>
+
+            </section>
+        
+            <section >
+                <pre><code data-trim="" data-line-numbers="4" class="language-jsx">function MyButton() {
+  const [count, setCount] = useState(0);
+  return (
+    &lt;button onClick={() =&gt; { count = count + 1 }}&gt; // NO!
+      Clicked {count} times
+    &lt;/button&gt;
+  );
+}
+</code></pre>
+<ul>
+<li><strong>mai</strong> modificare lo stato direttamente, utilizza sempre il <code>setState</code> (qui chiamato <code>setCount</code>)</li>
+</ul>
+
+            </section>
+        
+            <section >
+                <pre><code data-trim="" data-line-numbers="1,3" class="language-jsx">function MyButton({count}) {
+  return (
+    &lt;button onClick={() =&gt; { count = count + 1 }}&gt; // NO!
+      Clicked {count} times
+    &lt;/button&gt;
+  );
+}
+</code></pre>
+<ul>
+<li><strong>rispetta</strong> il flusso di dati, sempre dall’alto verso il basso. Non modificare una proprietà di un componente di livello superiore (in questo esempio: una <code>prop</code>)</li>
+</ul>
+
+            </section>
+        
+
+    </section>
+    
+
+
+
+    
+    <section>
+        <section >
+            <h2>Thinking in React</h2>
+<p><a href="https://react.dev/learn/thinking-in-react">React.dev</a></p>
+
+            </section>
+        
+            <section >
+                <p><img src="./assets/thinking-in-react.png" alt="thinking in react"></p>
+<ul>
+<li>disegna una <strong>gerarchia di componenti</strong></li>
+</ul>
+
+            </section>
+        
+            <section >
+                <ul>
+<li>costruisci una versione <strong>statica</strong> in React</li>
+</ul>
+
+            </section>
+        
+            <section >
+                <ul>
+<li>progetta una rappresentazione minima ma completa dello stato</li>
+<li>identifica dove implementare lo stato
+<ul>
+<li>quali componenti devono gestire lo stato?</li>
+<li>qual è il primo genitore comune di due componenti che devono condividere lo stesso stato?</li>
+<li><strong>lift state up</strong></li>
+</ul>
+</li>
+</ul>
+
+            </section>
+        
+            <section >
+                <ul>
+<li>implementa le prop che contengono le funzioni di callback (<strong>inverse data flow</strong>)</li>
+</ul>
+
+            </section>
+        
+
+    </section>
+    
+
+
+
+    
+        <section >
+            
+            <h2>Inizializzare l’applicazione</h2>
+<pre><code data-trim="" data-line-numbers="4" class="language-html">&lt;html&gt;
+  &lt;head&gt;&lt;/head&gt;
+  &lt;body&gt;
+    &lt;div id=&quot;app&quot;&gt;&lt;/div&gt;
+  &lt;/body&gt;
+&lt;/html&gt;
+</code></pre>
+<pre><code data-trim="" data-line-numbers="3,4" class="language-jsx">import { createRoot } from 'react-dom/client';
+import { Page } from './Page.jsx'
+const root = createRoot(document.getElementById('app'));
+root.render(&lt;Page /&gt;);
+</code></pre>
+
+            </section>
+    
+
+
+
+    
+    <section>
+        <section >
+            <h2>Librerie</h2>
+
+            </section>
+        
+            <section >
+                <p>Utilizzare una libreria di componenti (UI Kit): <a href="https://mui.com/joy-ui/getting-started/">MUI</a></p>
+<pre><code class="language-tsx">export const Header: React.FC = () =&gt; {
+  return (
+    &lt;Stack
+      direction=&quot;row&quot;
+      spacing={2}
+      sx={{
+        justifyContent: &quot;space-between&quot;,
+        alignItems: &quot;center&quot;,
+        paddingTop: &quot;16px&quot;,
+      }}
+    &gt;
+      &lt;img src=&quot;/logo.svg&quot; height={50} /&gt;
+      &lt;Stack direction=&quot;row&quot; spacing={2}&gt;
+        &lt;List role=&quot;menubar&quot; orientation=&quot;horizontal&quot;&gt;
+          &lt;ListItem role=&quot;none&quot;&gt;
+            &lt;ListItemButton role=&quot;menuitem&quot; component=&quot;a&quot;&gt;
+              Gestisci gli studenti
+            &lt;/ListItemButton&gt;
+          &lt;/ListItem&gt;
+        &lt;/List&gt;
+        &lt;Avatar /&gt;
+      &lt;/Stack&gt;
+    &lt;/Stack&gt;
+  );
+};
+</code></pre>
+
+            </section>
+        
+            <section >
+                <p>Utilizzare una libreria per il routing:
+<a href="https://reactrouter.com/en/main">React Router</a></p>
+<pre><code class="language-tsx">function App() {
+  return (
+    &lt;BrowserRouter basename=&quot;/&quot;&gt;
+      &lt;Routes&gt;
+        &lt;Route path=&quot;/&quot; element={&lt;Layout /&gt;}&gt;
+          &lt;Route index element={&lt;Root /&gt;} /&gt;
+
+          {/* Teacher */}
+          &lt;Route path=&quot;teacher&quot; element={&lt;TeacherGuard /&gt;}&gt;
+            &lt;Route index element={&lt;Exams /&gt;} /&gt;
+            &lt;Route path=&quot;exam&quot; element={&lt;AddExam /&gt;} /&gt;
+            &lt;Route path=&quot;exam/:id&quot; element={&lt;EditExam /&gt;} /&gt;
+            &lt;Route path=&quot;subscriptions&quot; element={&lt;Subscriptions /&gt;} /&gt;
+            &lt;Route path=&quot;subscriptions/:date&quot; element={&lt;SessionReport /&gt;} /&gt;
+            &lt;Route
+              path=&quot;subscriptions/:date/:id&quot;
+              element={&lt;SubscriptionReport /&gt;}
+            /&gt;
+          &lt;/Route&gt;
+
+          {/* Student */}
+          &lt;Route path=&quot;student&quot; element={&lt;StudentGuard /&gt;}&gt;
+            &lt;Route index element={&lt;MySubscriptions /&gt;} /&gt;
+            &lt;Route path=&quot;subscribe/:id&quot; element={&lt;Subscribe /&gt;} /&gt;
+            &lt;Route
+              path=&quot;subscriptions/:date/:id&quot;
+              element={&lt;SubscriptionReport /&gt;}
+            /&gt;
+          &lt;/Route&gt;
+
+          {/* Login */}
+          &lt;Route path=&quot;login&quot; element={&lt;Login /&gt;} /&gt;
+        &lt;/Route&gt;
+      &lt;/Routes&gt;
+    &lt;/BrowserRouter&gt;
+  );
+}
+</code></pre>
+
+            </section>
+        
+
+    </section>
+    
+
+
+    </div>
+
+
+  </div>
+
+  <div class="line top"></div>
+  <div class="line bottom"></div>
+  <div class="line left"></div>
+  <div class="line right"></div>
+
+  <script src="libs/reveal.js/4.3.1/reveal.js"></script>
+<script src="libs/reveal.js/4.3.1/plugin/notes/notes.js"></script>
+<script src="libs/reveal.js/4.3.1/plugin/markdown/markdown.js"></script>
+<script src="libs/reveal.js/4.3.1/plugin/highlight/highlight.js"></script>
+<script src="libs/reveal.js/4.3.1/plugin/math/math.js"></script>
+<script src="libs/reveal.js/4.3.1/plugin/fullscreen/plugin.js"></script>
+<script src="libs/reveal.js/4.3.1/plugin/animate/plugin.js"></script>
+<script src="libs/reveal.js/4.3.1/plugin/animate/svg.min.js"></script>
+<script src="libs/reveal.js/4.3.1/plugin/anything/plugin.js"></script>
+<script src="libs/reveal.js/4.3.1/plugin/anything/Chart.min.js"></script>
+<script src="libs/reveal.js/4.3.1/plugin/anything/d3/d3.v3.min.js"></script>
+<script src="libs/reveal.js/4.3.1/plugin/anything/d3.patch.js"></script>
+<script src="libs/reveal.js/4.3.1/plugin/anything/d3/queue.v1.min.js"></script>
+<script src="libs/reveal.js/4.3.1/plugin/anything/d3/topojson.v1.min.js"></script>
+<script src="libs/reveal.js/4.3.1/plugin/anything/function-plot.js"></script>
+<script src="libs/reveal.js/4.3.1/plugin/customcontrols/plugin.js"></script>
+<script src="libs/reveal.js/4.3.1/plugin/embed-tweet/plugin.js"></script>
+<script src="libs/reveal.js/4.3.1/plugin/chart/chart.min.js"></script>
+<script src="libs/reveal.js/4.3.1/plugin/chart/plugin.js"></script>
+<script src="libs/reveal.js/4.3.1/plugin/verticator/verticator.js"></script>
+
+<script src="libs/reveal.js/4.3.1/plugin/zoom/zoom.js"></script>
+<script src="libs/reveal.js/4.3.1/plugin/search/search.js"></script>
+<script src="libs/reveal.js/4.3.1/plugin/menu/menu.js"></script>
+<script src="libs/reveal.js/4.3.1/plugin/chalkboard/plugin.js"></script>
+
+<!--	<script src="libs/reveal.js/4.3.1/plugin/audio-slideshow/plugin.js"></script>  -->
+<!--	<script src="libs/reveal.js/4.3.1/plugin/audio-slideshow/recorder.js"></script>-->
+<!--	<script src="libs/reveal.js/4.3.1/plugin/audio-slideshow/RecordRTC.js"></script>-->
+
+  
+
+<script>
+  const printPlugins = [
+      RevealNotes,
+      RevealHighlight,
+      RevealMath.MathJax3,
+      RevealAnimate,
+      RevealChalkboard, 
+			RevealEmbedTweet,
+			RevealChart,
+		];
+
+		const plugins =  [...printPlugins,
+		RevealZoom, 
+		RevealSearch, 
+				RevealMarkdown, 
+				RevealMenu, 
+				RevealFullscreen,
+				RevealAnything,
+				//RevealAudioSlideshow,
+				//RevealAudioRecorder,
+				RevealCustomControls, 
+				// poll
+				// question
+				// seminar
+				Verticator 
+				 ]
+
+
+		// Also available as an ES module, see:
+		// https://revealjs.com/initialization/
+		Reveal.initialize({
+			controls: true,
+      controlsTutorial: true,
+      controlsLayout: 'bottom-right',
+      controlsBackArrows: 'faded',
+      progress: true,
+      slideNumber: false,
+      //#showSlideNumber "all" "print" "speaker"
+      hash: true, //# hash: false,
+      //# respondToHashChanges: true,
+      //# history: false,
+      keyboard: true,
+      //#keyboardCondition: null,
+      overview: true,
+      center: true,
+      touch: true,
+      loop: false,
+      rtl: false,
+      //#navigationMode: 'default', linear grid
+      shuffle: false,
+      fragments: true,
+      fragmentInURL: false,
+      embedded: false,
+      help: true,
+      //#pause: true
+      showNotes: false,
+      autoPlayMedia: false, // TODO fix this to a nullable value
+      //#preloadIframes: null. true false
+      //#autoAnimate: true
+      //#autoAnimateMatcher: null,
+      //#autoAnimateEasing: 'ease',
+      //autoAnimateDuration: 1.0,
+      //#autoAnimateUnmatched: true
+      //#autoAnimateStyles: []
+      autoSlide: 0, // TODO fix this to a falseable value
+      autoSlideStoppable: true,
+      autoSlideMethod: '0',
+      defaultTiming: 120,
+      mouseWheel: false,
+      //#previewLinks: false
+      //#postMessage: true, // TODO : this can cause issues with the vscode api ???
+      //#postMessageEvents: false,
+      //#focusBodyOnPageVisibilityChange: true,
+      transition: 'slide',
+      transitionSpeed: 'default',
+      backgroundTransition: 'fade',
+      //#pdfMaxPagesPerSlide: Number.POSITIVE_INFINITY,
+      //#pdfSeparateFragments: true,
+      //#pdfPageHeightOffset: -1,
+      viewDistance: 3,
+      //#mobileViewDistance: 2,
+      display: 'block',
+      //#hideInactiveCursor: true,
+      //#hideCursorTime: 5000
+
+      // Parallax Background
+      parallaxBackgroundImage: '',
+      parallaxBackgroundSize: '',
+      parallaxBackgroundHorizontal: 0,
+      parallaxBackgroundVertical: 0,
+
+      //Presentation Size
+      width: 960,
+			height: 700,
+			margin: 0.04,
+      minScale: 0.2,
+      maxScale: 2,
+      disableLayout: false,
+
+      audio: {
+        prefix: 'audio/', // audio files are stored in the "audio" folder
+        suffix: '.ogg', // audio files have the ".ogg" ending
+        textToSpeechURL: null, // the URL to the text to speech converter
+        defaultNotes: false, // use slide notes as default for the text to speech converter
+        defaultText: false, // use slide text as default for the text to speech converter
+        advance: 0, // advance to next slide after given time in milliseconds after audio has played, use negative value to not advance
+        autoplay: false, // automatically start slideshow
+        defaultDuration: 5, // default duration in seconds if no audio is available
+        defaultAudios: true, // try to play audios with names such as audio/1.2.ogg
+        playerOpacity: 0.05, // opacity value of audio player if unfocused
+        playerStyle: 'position: fixed; bottom: 4px; left: 25%; width: 50%; height:75px; z-index: 33;', // style used for container of audio controls
+        startAtFragment: false, // when moving to a slide, start at the current fragment or at the start of the slide
+      },
+      
+      chalkboard: { // font-awesome.min.css must be available
+        //src: "chalkboard/chalkboard.json",
+        storage: "chalkboard-demo",
+      },
+      
+			customcontrols: {
+					controls: [
+      						{
+						  id: 'toggle-overview',
+						  title: 'Toggle overview (O)',
+						  icon: '<i class="fa fa-th"></i>',
+						  action: 'Reveal.toggleOverview();'
+						}
+						,
+      {
+        icon: '<i class="fa fa-pen-square"></i>',
+        title: 'Toggle chalkboard (B)',
+        action: 'RevealChalkboard.toggleChalkboard();'
+      },
+      {
+        icon: '<i class="fa fa-pen"></i>',
+        title: 'Toggle notes canvas (C)',
+        action: 'RevealChalkboard.toggleNotesCanvas();'
+      }
+      
+				]
+			},
+			chart: {
+					defaults: { 
+						color: 'lightgray', // color of labels
+						scale: { 
+							beginAtZero: true, 
+							ticks: { stepSize: 1 },
+							grid: { color: "lightgray" } , // color of grid lines
+						},
+					},
+					line: { borderColor: [ "rgba(20,220,220,.8)" , "rgba(220,120,120,.8)", "rgba(20,120,220,.8)" ], "borderDash": [ [5,10], [0,0] ] }, 
+					bar: { backgroundColor: [ "rgba(20,220,220,.8)" , "rgba(220,120,120,.8)", "rgba(20,120,220,.8)" ]}, 
+					pie: { backgroundColor: [ ["rgba(0,0,0,.8)" , "rgba(220,20,20,.8)", "rgba(20,220,20,.8)", "rgba(220,220,20,.8)", "rgba(20,20,220,.8)"] ]},
+					radar: { borderColor: [ "rgba(20,220,220,.8)" , "rgba(220,120,120,.8)", "rgba(20,120,220,.8)" ]}, 
+			},
+			math: {
+				mathjax: 'https://cdn.jsdelivr.net/gh/mathjax/mathjax@2.7.8/MathJax.js',
+				config: 'TeX-AMS_HTML-full',
+				// pass other options into `MathJax.Hub.Config()`
+				TeX: { Macros: { RR: "{\\bf R}" } }
+				},
+				anything: [ 
+				{
+		className: "plot",
+		defaults: {width:500, height: 500, grid:true},
+		initialize: (function(container, options){ options.target = "#"+container.id; functionPlot(options) })
+	 },
+	 {
+		className: "chart",  
+		initialize: (function(container, options){ container.chart = new Chart(container.getContext("2d"), options);  })
+	 },
+	 {
+		className: "anything",
+		initialize: (function(container, options){ if (options && options.initialize) { options.initialize(container)} })
+	 },
+					],
+			// Learn about plugins: https://revealjs.com/plugins/
+			plugins: (window.location.search.match(/print-pdf/gi) ? printPlugins : plugins ) 
+		});
+			
+
+
+	    // Change chalkboard theme : 
+		function changeTheme(input) {
+			var config = {};
+			config.theme = input.value;
+			Reveal.getPlugin("RevealChalkboard").configure(config);
+			input.blur();
+		}
+
+		// // Handle the message inside the webview
+        // window.addEventListener('message', event => {
+
+        //     const message = event.data; // The JSON data our extension sent
+
+        //     switch (message.command) {
+        //         case 'refactor':
+        //             Reveal.toggleHelp();
+        //     }
+        // });
+
+		if (window.location.search.match(/print-pdf-now/gi)) {
+      		setTimeout(() => {
+				window.print();
+			  }, 2500);
+			
+    }
+</script>
+
+</body>
+
+</html>
