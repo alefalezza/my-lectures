@@ -1,7 +1,14 @@
-# Lezioni di Node.js
+# Lezioni
 
-Puoi visualizzare i contenuti in diversi modi:
+## Istruzioni
 
-- in [pdf](./export/nodejs.pdf)
-- in [html](./export/index.html)
-- [consigliato] in Visual studio code, installando il plugin [VS code reveal](https://marketplace.visualstudio.com/items?itemName=evilz.vscode-reveal) e aprendo il file `nodejs.md` in questa cartella.
+Queste lezioni sono scritte in [Markdown](https://www.markdownguide.org/) e sono strutturate per essere visualizzate come slide usando [Reveal.js](https://revealjs.com/).
+
+**Puoi visualizzarle in Visual studio code, installando il plugin [VS code reveal](https://marketplace.visualstudio.com/items?itemName=evilz.vscode-reveal).**
+
+Nel caso tu abbia fretta di consultarle, in questo repository trovi anche le versioni in pdf e html, nella directory [export](./export).
+
+## Indice delle lezioni
+
+- [Node.js](./nodejs.md)
+- [React]()
