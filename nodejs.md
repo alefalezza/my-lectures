@@ -1,6 +1,6 @@
 ---
-theme: white
-highlightTheme: github
+theme: moon
+highlightTheme: github-dark
 ---
 # Node.js
 
@@ -222,7 +222,7 @@ const [primoElemento, , terzoElemento] = originalArray;
 
 --
 
-## Spread...
+## ...Spread
 
 ```js
 const myArray = [ 4, 5, 6 ];
@@ -409,6 +409,8 @@ chiamaConNomeCompleto("Paolo", famigliaRossi);
 ---
 
 ## Funzioni asincrone
+
+--
 
 ```js {data-trim data-line-numbers="|13|19|14|15|16|20|7-11|21|1-5|22"}
 function salutamiDopo() {

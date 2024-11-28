@@ -21,7 +21,7 @@
 
   <!-- highlight Theme -->
   
-  <link rel="stylesheet" href="libs/highlight.js/11.3.1/styles/github.min.css">
+  <link rel="stylesheet" href="libs/highlight.js/11.3.1/styles/github-dark.min.css">
   
 	
 		
@@ -37,7 +37,7 @@
 
   <!-- Revealjs Theme -->
   
-  <link rel="stylesheet" href="libs/reveal.js/4.3.1/theme/white.css" id="theme">
+  <link rel="stylesheet" href="libs/reveal.js/4.3.1/theme/moon.css" id="theme">
   
   
 
@@ -169,7 +169,7 @@ el.innerHTML = &quot;Contenuto aggiornato&quot;;
             <h2>JSX</h2>
 <ul>
 <li>sintassi simile ad HTML</li>
-<li>in realtà è javascript “mascherato”</li>
+<li>in realtà è <strong>javascript</strong> “mascherato”</li>
 </ul>
 
             </section>
@@ -178,9 +178,9 @@ el.innerHTML = &quot;Contenuto aggiornato&quot;;
                 <pre><code class="language-jsx">&lt;MyComponent textVariable=&quot;Contenuto da inserire&quot; /&gt;
 </code></pre>
 <ul>
-<li>Componente con l’iniziale maiuscola</li>
+<li><strong>C</strong>omponente con l’<strong>iniziale maiuscola</strong></li>
 <li>attributi <code>camelCase</code></li>
-<li>gli attributi possono contenere anche numeri, booleani, funzioni, array…
+<li>gli attributi possono contenere anche numeri, booleani, funzioni, array… {tra parentesi graffe}
 <ul>
 <li><em>(in HTML gli attributi sono sempre stringhe)</em></li>
 </ul>
@@ -198,9 +198,7 @@ el.innerHTML = &quot;Contenuto aggiornato&quot;;
   )
 }
 </code></pre>
-<ul>
-<li>gli attributi in react si chiamano <strong>props</strong></li>
-</ul>
+<p>Gli attributi in react si chiamano <strong>props</strong></p>
 
             </section>
         
@@ -218,9 +216,7 @@ el.innerHTML = &quot;Contenuto aggiornato&quot;;
   &lt;/Layout&gt;
 );
 </code></pre>
-<ul>
-<li>composition</li>
-</ul>
+<p>Composition: per ottenere applicazioni complesse, combina diversi componenti in una struttura gerarchica, come in HTML</p>
 
             </section>
         
@@ -234,11 +230,13 @@ el.innerHTML = &quot;Contenuto aggiornato&quot;;
     <section>
         <section >
             <h2>Reactive</h2>
+<p>Facciamo in modo che l’applicazione si comporti in modo dinamico</p>
 
             </section>
         
             <section >
-                <pre><code data-trim="" data-line-numbers="|2-6" class="language-jsx">&lt;Search 
+                <p>Passiamo una funzione come parametro a un componente:</p>
+<pre><code data-trim="" data-line-numbers="|2-6" class="language-jsx">&lt;Search 
   onSearch={async (searchQuery) =&gt; {
     const searchResults = await 
       fetch('http://api.com/search?' + searchQuery);
@@ -254,7 +252,8 @@ el.innerHTML = &quot;Contenuto aggiornato&quot;;
             </section>
         
             <section >
-                <pre><code data-trim="" data-line-numbers="|1|3" class="language-jsx">const Search = ({ onSearch }) =&gt; {
+                <p>Ora vediamo come quella funzione viene utilizzata all’interno del componente:</p>
+<pre><code data-trim="" data-line-numbers="|1|3" class="language-jsx">const Search = ({ onSearch }) =&gt; {
   return (
     &lt;form onSubmit={ () =&gt; onSearch(what) }&gt;
       Cerca:
@@ -270,7 +269,8 @@ el.innerHTML = &quot;Contenuto aggiornato&quot;;
             </section>
         
             <section >
-                <pre><code data-trim="" data-line-numbers="|5" class="language-jsx">&lt;Search 
+                <p>Un passo indietro: cos’è quel <code>setContent</code>?</p>
+<pre><code data-trim="" data-line-numbers="|5" class="language-jsx">&lt;Search 
   onSearch={async (searchQuery) =&gt; {
     const searchResults = await 
       fetch('http://api.com/search?' + searchQuery);
@@ -282,30 +282,214 @@ el.innerHTML = &quot;Contenuto aggiornato&quot;;
             </section>
         
             <section >
-                <pre><code data-trim="" data-line-numbers="|2|8|2|12" class="language-jsx">const Page = () =&gt; {
+                <p>E’ un <code>hook</code> di React, che permette di gestire una variabile di stato.</p>
+<pre><code data-trim="" data-line-numbers="|2|8|2|10" class="language-jsx">const Page = () =&gt; {
   const [content, setContent] = useState(&quot;Contenuto iniziale&quot;);
   return (
     &lt;Layout&gt;
-        &lt;Search onSearch={async (searchQuery) =&gt; {
-          const searchResults = await 
-            fetch('http://api.com/search?' + searchQuery);
-          setContent(searchResults);
-        }}/&gt;
-      &lt;/Header&gt;
-      &lt;Container&gt;
-        &lt;MyComponent textVariable={content} /&gt;
-      &lt;/Container&gt;
+      &lt;Search onSearch={async (searchQuery) =&gt; {
+        const searchResults = await 
+          fetch('http://api.com/search?' + searchQuery);
+        setContent(searchResults);
+      }}/&gt;
+      &lt;MyComponent textVariable={content} /&gt;
     &lt;/Layout&gt;
   );
-}</code></pre>
+}
+</code></pre>
 
             </section>
         
             <section >
-                <h2>Approfondimenti</h2>
+                <p>Quando lo stato di un compomente cambia, la funzione che lo rappresenta viene eseguita nuovamente (rendering) con il valore di stato aggiornato.</p>
+
+            </section>
+        
+            <section >
+                <h2>Approfondisci</h2>
 <ul>
 <li><a href="https://react.dev/learn">React.dev</a></li>
 </ul>
+
+            </section>
+        
+
+    </section>
+    
+
+
+
+    
+    <section>
+        <section >
+            <h2>Gestisci lo stato</h2>
+<p>Lo stato è una specie di “memoria interna” di un componente</p>
+<pre><code class="language-jsx">function MyButton() {
+  const [count, setCount] = useState(0);
+  // ...
+  return &lt;div&gt;&lt;/div&gt;
+}
+</code></pre>
+
+            </section>
+        
+            <section >
+                <pre><code class="language-jsx">function MyButton() {
+  const [count, setCount] = useState(0);
+  // ...
+  return &lt;div&gt;&lt;/div&gt;
+}
+</code></pre>
+<ul>
+<li><code>useState(initialValue)</code>: imposta un valore iniziale (zero, nell’esempio)</li>
+<li><code>count</code>: il valore corrente dello stato</li>
+<li><code>setCount</code>: una funzione che serve per modificare il valore di <code>count</code></li>
+</ul>
+
+            </section>
+        
+            <section >
+                <pre><code class="language-jsx">function MyButton() {
+  const [count, setCount] = useState(0);
+  const handleClick = () =&gt; setCount(count + 1);
+  return &lt;button onClick={handleClick}&gt;
+    Clicked {count} times
+  &lt;/button&gt;
+}
+</code></pre>
+<p>Ad ogni click di <code>button</code>, il counter viene incrementato e il suo valore viene visualizzato all’interno del pulsante (variabile di stato <code>{count}</code>)</p>
+
+            </section>
+        
+            <section >
+                <p><a href="https://react.dev/learn#updating-the-screen">Prova ad usare le funzionalità di <strong>stato</strong> sulla documentazione ufficiale di React</a></p>
+
+            </section>
+        
+
+    </section>
+    
+
+
+
+    
+    <section>
+        <section >
+            <h2>Stato condiviso</h2>
+<p>A volte vogliamo che lo stato di un componente sia utilizzabile anche in un altro componente.</p>
+
+            </section>
+        
+            <section >
+                <p>Individua il componente <strong>comune</strong> più vicino</p>
+<pre><code data-trim="" data-line-numbers="|1,8" class="language-jsx">&lt;div class=&quot;container&gt;
+  &lt;div class=&quot;column&quot;&gt;
+    &lt;HandleState /&gt; {/* Modifica lo stato */}
+  &lt;/div&gt;
+  &lt;div class=&quot;column&quot;&gt;
+    &lt;DisplayState /&gt; {/* Visualizza o stato */}
+  &lt;/div&gt;
+&lt;/div&gt;
+</code></pre>
+
+            </section>
+        
+            <section >
+                <p>Trasformiamo il <code>&lt;div&gt;</code> in un Componente</p>
+<pre><code data-trim="" data-line-numbers="1,8" class="language-jsx">&lt;Container&gt;
+  &lt;div class=&quot;column&quot;&gt;
+    &lt;HandleState /&gt; {/* Modifica lo stato */}
+  &lt;/div&gt;
+  &lt;div class=&quot;column&quot;&gt;
+    &lt;DisplayState /&gt; {/* Visualizza o stato */}
+  &lt;/div&gt;
+&lt;/Container&gt;
+</code></pre>
+
+            </section>
+        
+            <section >
+                <p>In quel componente puoi gestire lo stato a cui accedono i componenti figli</p>
+<pre><code data-trim="" data-line-numbers="|2|7|10" class="language-jsx">const Container = () =&gt; {
+  const [state, setState] = useState('initial');
+
+  return (
+    &lt;div class=&quot;container&gt;
+      &lt;div class=&quot;column&quot;&gt;
+        &lt;HandleState onClick={setState} /&gt;
+      &lt;/div&gt;
+      &lt;div class=&quot;column&quot;&gt;
+        &lt;DisplayState value={state} /&gt;
+      &lt;/div&gt;
+    &lt;/div&gt;
+  )
+}
+</code></pre>
+
+            </section>
+        
+            <section >
+                <p><a href="https://react.dev/learn#sharing-data-between-components">Prova ad usare lo <strong>stato condiviso</strong> nell’esempio sulla documentazione ufficiale di React</a></p>
+
+            </section>
+        
+
+    </section>
+    
+
+
+
+    
+    <section>
+        <section >
+            <h2>Side effects</h2>
+<p>Hai notato che per modificare lo stato di un componente abbiamo sempre utilizzato <code>onClick</code>?</p>
+<p>Questa funzione è un <strong>event handler</strong>, che ci permette di modificare lo stato quando l’utente esegue un’azione.</p>
+
+            </section>
+        
+            <section >
+                <p>Ma talvolta lo stato deve essere modificato in base ad altri <em>eventi</em>, non generati dall’utente.</p>
+<p>Chiameremo questi eventi <strong>side effects</strong>.</p>
+
+            </section>
+        
+            <section >
+                <p>Oppure, quando avviene un cambiamento di stato deve essere invocata una funzione esterna: anche questo è un <strong>side effect</strong>.</p>
+
+            </section>
+        
+            <section >
+                <p>Per gestire i <strong>side effects</strong><br>
+utilizzeremo un nuovo <em>hook</em> di React:</p>
+<pre><code data-trim="" data-line-numbers="3-5" class="language-jsx">const Component = () =&gt; {
+
+  useEffect(() =&gt; {
+    // side effect code 
+  }, [dependencies]);
+
+  return &lt;&gt;...qualcosa&lt;/&gt;
+}
+</code></pre>
+
+            </section>
+        
+            <section >
+                <p>Un utilizzo tipico:<br>
+visualizzare il contenuto di una pagina</p>
+<pre><code class="language-jsx">const Component = ({ pageName }) =&gt; {
+  const [pageContent, setPageContent] = useState(&quot;&quot;);
+
+  useEffect(() =&gt; {
+    fetch('/api/' + pageName)
+      .then(res =&gt; res.json())
+      .then(setPageContent);
+  }, [pageName]);
+
+  return &lt;&gt;{pageContent}&lt;/&gt;
+}
+</code></pre>
+<p>Quando cambia <code>pageName</code> viene invocata l’api che va a modificare la variabile <code>pageContent</code>.</p>
 
             </section>
         
@@ -385,7 +569,7 @@ export default function MyApp() {
             </section>
         
             <section >
-                <pre><code class="language-jsx">function MyButton({count, setCount}) {
+                <pre><code data-trim="" data-line-numbers="|10" class="language-jsx">function MyButton({count, setCount}) {
   return (
     &lt;button onClick={() =&gt; setCount(count + 1)}&gt;
       Clicked {count} times
@@ -431,7 +615,7 @@ export default function MyApp() {
 }
 </code></pre>
 <ul>
-<li><strong>mai</strong> modificare lo stato direttamente, utilizza sempre il <code>setState</code> (qui chiamato <code>setCount</code>)</li>
+<li><strong>mai</strong> modificare lo stato direttamente, utilizza sempre la funzione <code>setState</code> (qui chiamato <code>setCount</code>)</li>
 </ul>
 
             </section>
@@ -461,7 +645,7 @@ export default function MyApp() {
     <section>
         <section >
             <h2>Thinking in React</h2>
-<p><a href="https://react.dev/learn/thinking-in-react">React.dev</a></p>
+<p>Ovvero: come procedere quando realizzi un’applicazione React</p>
 
             </section>
         
@@ -498,6 +682,12 @@ export default function MyApp() {
                 <ul>
 <li>implementa le prop che contengono le funzioni di callback (<strong>inverse data flow</strong>)</li>
 </ul>
+
+            </section>
+        
+            <section >
+                <h2>Approfondisci</h2>
+<p><a href="https://react.dev/learn/thinking-in-react">React.dev</a></p>
 
             </section>
         

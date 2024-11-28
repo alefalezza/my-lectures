@@ -1,6 +1,6 @@
 ---
-theme: white
-highlightTheme: github
+theme: moon
+highlightTheme: github-dark
 ---
 # React
 
@@ -198,7 +198,7 @@ Quando lo stato di un compomente cambia, la funzione che lo rappresenta viene es
 
 --
 
-## Approfondimenti
+## Approfondisci
 
 - [React.dev](https://react.dev/learn)
 
@@ -513,7 +513,9 @@ Ovvero: come procedere quando realizzi un'applicazione React
 
 --
 
-[Approfondisci su React.dev](https://react.dev/learn/thinking-in-react)
+## Approfondisci
+
+[React.dev](https://react.dev/learn/thinking-in-react)
 
 ---
 

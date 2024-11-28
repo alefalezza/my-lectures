@@ -21,7 +21,7 @@
 
   <!-- highlight Theme -->
   
-  <link rel="stylesheet" href="libs/highlight.js/11.3.1/styles/github.min.css">
+  <link rel="stylesheet" href="libs/highlight.js/11.3.1/styles/github-dark.min.css">
   
 	
 		
@@ -37,7 +37,7 @@
 
   <!-- Revealjs Theme -->
   
-  <link rel="stylesheet" href="libs/reveal.js/4.3.1/theme/white.css" id="theme">
+  <link rel="stylesheet" href="libs/reveal.js/4.3.1/theme/moon.css" id="theme">
   
   
 
@@ -118,6 +118,38 @@
 
             </section>
         
+            <section >
+                <h1>Monorepo (npm workspaces)</h1>
+<p>Node.js permette di raggrupare diversi progetti in un unico repository git</p>
+<pre><code>repository-root
+  - /first-package
+    - package.json &lt;- package di una applicazine
+  - /second-package
+    - package.json
+  - package.json &lt;- package principale
+</code></pre>
+
+            </section>
+        
+            <section >
+                <h2>Package principale</h2>
+<pre><code class="language-json">{
+  ...
+  &quot;workspaces&quot;: [&quot;first-package&quot;, &quot;second-package],
+  ...
+}
+</code></pre>
+
+            </section>
+        
+            <section >
+                <h2>Usare npm in un monorepo</h2>
+<pre><code class="language-bash">npm run script -w first-package
+</code></pre>
+<p>Esegue un comando in un determinato pacchetto del monorepo</p>
+
+            </section>
+        
 
     </section>
     
@@ -189,8 +221,8 @@ nomeLet = {
 
 
     
+    <section>
         <section >
-            
             <h2>Oggetti</h2>
 <pre><code class="language-js">const myObject = {
   proprieta1: &quot;valore&quot;,
@@ -205,6 +237,35 @@ const proprieta2 = myObject.proprieta2;
 </code></pre>
 
             </section>
+        
+            <section >
+                <h2 Destructuring=""></h2>
+<p>Estrae una o più proprietà di un oggetto e le assegna a delle variabili</p>
+<pre><code class="language-js">const { inputPath, url, postId, tags, ...postContent } = apiPost;
+</code></pre>
+
+            </section>
+        
+            <section >
+                <h2>…Spread</h2>
+<pre><code class="language-js">const oldObject = {
+  &quot;key1&quot;: &quot;first value&quot;,
+  &quot;key2&quot;: &quot;second value&quot;,
+  &quot;key3&quot;: &quot;third value&quot;
+};
+
+const myObject = {
+  &quot;key0&quot;: &quot;zeroth value&quot;,
+  ...oldObject
+};
+
+// &gt; myObject: Object { key0: &quot;zeroth value&quot;, key1: &quot;first value&quot;, key2: &quot;second value&quot;, key3: &quot;third value&quot; }
+</code></pre>
+
+            </section>
+        
+
+    </section>
     
 
 
@@ -217,6 +278,43 @@ const proprieta2 = myObject.proprieta2;
 </code></pre>
 <p>Accedere al valore in una determinata posizione:</p>
 <pre><code class="language-js">const primoElementoDellArray = myArray[0]; // &quot;valore 1&quot;
+</code></pre>
+
+            </section>
+        
+            <section >
+                <h2>[Destructuring]</h2>
+<p>Estrae uno o più elementi di un array e assegnarli ad una variabile</p>
+<pre><code class="language-js">const originalArray = [&quot;primo&quot;, &quot;secondo&quot;, 3];
+
+// destructuring
+const [primoElemento, secondoElemento, terzoElemento] = originalArray;
+
+// &gt; primoElemento === &quot;primo&quot;; 
+// &gt; secondoElemento === &quot;secondo&quot;; 
+// &gt; terzoElemento === 3
+</code></pre>
+
+            </section>
+        
+            <section >
+                <h2>[Destructuring]</h2>
+<pre><code class="language-js">const originalArray = [&quot;primo&quot;, &quot;secondo&quot;, 3];
+
+// non devi per forza estrarre tutti gli elementi
+const [primoElemento, , terzoElemento] = originalArray;
+
+// &gt; primoElemento === &quot;primo&quot;; terzoElemento === 3
+</code></pre>
+
+            </section>
+        
+            <section >
+                <h2>…Spread</h2>
+<pre><code class="language-js">const myArray = [ 4, 5, 6 ];
+const myMergedArray = [ 1, 2, 3, ...myArray ];
+
+// &gt; Array(6) [ 1, 2, 3, 4, 5, 6 ]
 </code></pre>
 
             </section>
@@ -395,7 +493,11 @@ chiamaConNomeCompleto(&quot;Paolo&quot;, famigliaRossi);
     <section>
         <section >
             <h2>Funzioni asincrone</h2>
-<pre><code data-trim="" data-line-numbers="|13|19|14|15|16|20|7-11|21|1-5|22" class="language-js">function salutamiDopo() {
+
+            </section>
+        
+            <section >
+                <pre><code data-trim="" data-line-numbers="|13|19|14|15|16|20|7-11|21|1-5|22" class="language-js">function salutamiDopo() {
   setTimeout(() =&gt; {
     console.log(&quot;Ciao&quot;);
   }, 1000);
@@ -616,15 +718,31 @@ const user: User = {
                 <h2>Import / export</h2>
 <pre><code class="language-js">// a.js
 
-export const myFunction = () =&gt; {
+export const myFunction = () =&gt; {/* */}
+export const myVariable = &quot;value&quot;;
+</code></pre>
+<pre><code class="language-js">// b.js
+// posso importare una o più variabili esportate da un file con export multipli
+import { myFunction, myVariable } from &quot;./a.js&quot;
+
+myFunction(myVariable);
+</code></pre>
+
+            </section>
+        
+            <section >
+                <h2>Export default</h2>
+<pre><code class="language-js">// a.js
+
+export default myFunction = () =&gt; {
   // ...
 }
 </code></pre>
 <pre><code class="language-js">// b.js
+// posso assegnare il default alla variabile che voglio
+import myRENAMEDFunction from &quot;./a.js&quot;
 
-import {myFunction} from &quot;./a.js&quot;
-
-myFunction();
+myRENAMEDFunction();
 </code></pre>
 
             </section>
@@ -719,7 +837,6 @@ router.get(&quot;/api/exams&quot;, (ctx) =&gt; {
     description: &quot;Esempio di risposta api&quot;
   };
 });
-
 
 </code></pre>
 
