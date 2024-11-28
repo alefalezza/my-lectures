@@ -6,7 +6,7 @@ Queste lezioni sono scritte in [Markdown](https://www.markdownguide.org/) e sono
 
 **Puoi visualizzarle in Visual studio code, installando il plugin [VS code reveal](https://marketplace.visualstudio.com/items?itemName=evilz.vscode-reveal).**
 
-Nel caso tu abbia fretta di consultarle, in questo repository trovi anche le versioni in pdf e html, nella directory [export](./export).
+Nel caso tu abbia fretta di consultarle, in questo repository trovi anche le versioni in pdf e html.
 
 ## Indice delle lezioni
 
