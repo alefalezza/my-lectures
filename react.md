@@ -71,7 +71,7 @@ el.innerHTML = "Contenuto aggiornato";
 ## JSX
 
 - sintassi simile ad HTML
-- in realtà è javascript "mascherato"
+- in realtà è **javascript** "mascherato"
 
 --
 
@@ -79,9 +79,9 @@ el.innerHTML = "Contenuto aggiornato";
 <MyComponent textVariable="Contenuto da inserire" />
 ```
 
-- Componente con l'iniziale maiuscola
+- **C**omponente con l'**iniziale maiuscola**
 - attributi `camelCase`
-- gli attributi possono contenere anche numeri, booleani, funzioni, array...
+- gli attributi possono contenere anche numeri, booleani, funzioni, array... \{tra parentesi graffe\}
   - *(in HTML gli attributi sono sempre stringhe)*
 
 --
@@ -96,7 +96,7 @@ function MyComponent(props) {
 }
 ```
 
-- gli attributi in react si chiamano **props**
+Gli attributi in react si chiamano **props**
 
 
 --
@@ -116,13 +116,17 @@ const Page = () => (
 );
 ```
 
-- composition
+Composition: per ottenere applicazioni complesse, combina diversi componenti in una struttura gerarchica, come in HTML
 
 ---
 
 ## Reactive
 
+Facciamo in modo che l'applicazione si comporti in modo dinamico
+
 --
+
+Passiamo una funzione come parametro a un componente:
 
 ```jsx  {data-trim data-line-numbers="|2-6"}
 <Search 
@@ -139,6 +143,8 @@ const Page = () => (
 
 --
 
+Ora vediamo come quella funzione viene utilizzata all'interno del componente:
+
 ```jsx {data-trim data-line-numbers="|1|3"}
 const Search = ({ onSearch }) => {
   return (
@@ -154,6 +160,8 @@ const Search = ({ onSearch }) => {
 
 --
 
+Un passo indietro: cos'è quel `setContent`?
+
 ```jsx  {data-trim data-line-numbers="|5"}
 <Search 
   onSearch={async (searchQuery) => {
@@ -166,23 +174,27 @@ const Search = ({ onSearch }) => {
 
 --
 
-```jsx {data-trim data-line-numbers="|2|8|2|12"}
+E' un `hook` di React, che permette di gestire una variabile di stato.
+
+```jsx {data-trim data-line-numbers="|2|8|2|10"}
 const Page = () => {
   const [content, setContent] = useState("Contenuto iniziale");
   return (
     <Layout>
-        <Search onSearch={async (searchQuery) => {
-          const searchResults = await 
-            fetch('http://api.com/search?' + searchQuery);
-          setContent(searchResults);
-        }}/>
-      </Header>
-      <Container>
-        <MyComponent textVariable={content} />
-      </Container>
+      <Search onSearch={async (searchQuery) => {
+        const searchResults = await 
+          fetch('http://api.com/search?' + searchQuery);
+        setContent(searchResults);
+      }}/>
+      <MyComponent textVariable={content} />
     </Layout>
   );
 }
+```
+
+--
+
+Quando lo stato di un compomente cambia, la funzione che lo rappresenta viene eseguita nuovamente (rendering) con il valore di stato aggiornato.
 
 --
 
@@ -190,6 +202,167 @@ const Page = () => {
 
 - [React.dev](https://react.dev/learn)
 
+---
+
+## Gestisci lo stato
+
+Lo stato è una specie di "memoria interna" di un componente
+
+```jsx
+function MyButton() {
+  const [count, setCount] = useState(0);
+  // ...
+  return <div></div>
+}
+```
+
+--
+
+```jsx
+function MyButton() {
+  const [count, setCount] = useState(0);
+  // ...
+  return <div></div>
+}
+```
+
+- `useState(initialValue)`: imposta un valore iniziale (zero, nell'esempio)
+- `count`: il valore corrente dello stato
+- `setCount`: una funzione che serve per modificare il valore di `count`
+
+--
+
+```jsx
+function MyButton() {
+  const [count, setCount] = useState(0);
+  const handleClick = () => setCount(count + 1);
+  return <button onClick={handleClick}>
+    Clicked {count} times
+  </button>
+}
+```
+
+Ad ogni click di `button`, il counter viene incrementato e il suo valore viene visualizzato all'interno del pulsante (variabile di stato `{count}`)
+
+--
+
+[Prova ad usare le funzionalità di **stato** sulla documentazione ufficiale di React](https://react.dev/learn#updating-the-screen)
+
+---
+
+## Stato condiviso
+
+A volte vogliamo che lo stato di un componente sia utilizzabile anche in un altro componente.
+
+--
+
+Individua il componente **comune** più vicino
+
+```jsx {data-trim data-line-numbers="|1,8"}
+<div class="container>
+  <div class="column">
+    <HandleState /> {/* Modifica lo stato */}
+  </div>
+  <div class="column">
+    <DisplayState /> {/* Visualizza o stato */}
+  </div>
+</div>
+```
+
+--
+
+Trasformiamo il `<div>` in un Componente
+
+```jsx {data-trim data-line-numbers="1,8"}
+<Container>
+  <div class="column">
+    <HandleState /> {/* Modifica lo stato */}
+  </div>
+  <div class="column">
+    <DisplayState /> {/* Visualizza o stato */}
+  </div>
+</Container>
+```
+
+--
+
+In quel componente puoi gestire lo stato a cui accedono i componenti figli
+
+```jsx {data-trim data-line-numbers="|2|7|10"}
+const Container = () => {
+  const [state, setState] = useState('initial');
+
+  return (
+    <div class="container>
+      <div class="column">
+        <HandleState onClick={setState} />
+      </div>
+      <div class="column">
+        <DisplayState value={state} />
+      </div>
+    </div>
+  )
+}
+```
+
+--
+
+[Prova ad usare lo **stato condiviso** nell'esempio sulla documentazione ufficiale di React](https://react.dev/learn#sharing-data-between-components)
+
+---
+
+## Side effects
+
+Hai notato che per modificare lo stato di un componente abbiamo sempre utilizzato `onClick`?
+
+Questa funzione è un **event handler**, che ci permette di modificare lo stato quando l'utente esegue un'azione.
+
+--
+
+Ma talvolta lo stato deve essere modificato in base ad altri *eventi*, non generati dall'utente.
+
+Chiameremo questi eventi **side effects**.
+
+--
+
+Oppure, quando avviene un cambiamento di stato deve essere invocata una funzione esterna: anche questo è un **side effect**.
+
+--
+
+Per gestire i **side effects**  
+utilizzeremo un nuovo *hook* di React:
+
+```jsx {data-trim data-line-numbers="3-5"}
+const Component = () => {
+
+  useEffect(() => {
+    // side effect code 
+  }, [dependencies]);
+
+  return <>...qualcosa</>
+}
+```
+
+--
+
+Un utilizzo tipico:  
+visualizzare il contenuto di una pagina 
+
+```jsx
+const Component = ({ pageName }) => {
+  const [pageContent, setPageContent] = useState("");
+
+  useEffect(() => {
+    fetch('/api/' + pageName)
+      .then(res => res.json())
+      .then(setPageContent);
+  }, [pageName]);
+
+  return <>{pageContent}</>
+}
+```
+
+Quando cambia `pageName` viene invocata l'api che va a modificare la variabile `pageContent`.
 
 ---
 
@@ -257,7 +430,7 @@ export default function MyApp() {
 
 --
 
-```jsx
+```jsx {data-trim data-line-numbers="|10"}
 function MyButton({count, setCount}) {
   return (
     <button onClick={() => setCount(count + 1)}>
@@ -294,7 +467,7 @@ function MyButton() {
 }
 ```
 
-- **mai** modificare lo stato direttamente, utilizza sempre il `setState` (qui chiamato `setCount`)
+- **mai** modificare lo stato direttamente, utilizza sempre la funzione `setState` (qui chiamato `setCount`)
 
 --
 
@@ -314,7 +487,7 @@ function MyButton({count}) {
 
 ## Thinking in React
 
-[React.dev](https://react.dev/learn/thinking-in-react)
+Ovvero: come procedere quando realizzi un'applicazione React
 
 --
 
@@ -337,6 +510,10 @@ function MyButton({count}) {
 --
 
 - implementa le prop che contengono le funzioni di callback (**inverse data flow**)
+
+--
+
+[Approfondisci su React.dev](https://react.dev/learn/thinking-in-react)
 
 ---
 
