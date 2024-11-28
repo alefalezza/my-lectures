@@ -1,5 +1,5 @@
 ---
-theme: moon
+theme: black
 highlightTheme: github-dark
 ---
 # Node.js
