@@ -10,5 +10,5 @@ Nel caso tu abbia fretta di consultarle, in questo repository trovi anche le ver
 
 ## Indice delle lezioni
 
-- [Node.js](./nodejs.md) ([pdf](./nodejs/nodejs.pdf), [html](./nodejs/index.html))
-- [React](./react.md) ([pdf](./react/react.pdf), [html](./react/index.html))
+- [Node.js](./nodejs.md) ([pdf](./nodejs.pdf), [html](./nodejs/index.html))
+- [React](./react.md) ([pdf](./react.pdf), [html](./react/index.html))
