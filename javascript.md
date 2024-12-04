@@ -2,75 +2,8 @@
 theme: black
 highlightTheme: github-dark
 ---
-# Node.js
 
-ITS 2024-25
-
----
-
-# Installa Node.js
-
-Prerequisiti
-
-- GIT: [https://git-scm.com](https://git-scm.com )
-
-Installazione consigliata
-
-- Installa Volta: [https://volta.sh ](https://volta.sh )
-- Apri git bash:
-  - `curl https://get.volta.sh | bash`
-  - `volta install node`
-
---
-
-# Crea un nuovo progetto Node.js
-
-- Crea una nuova cartella
-- Apri git bash e posizionati nella cartella del progetto
-  - `npm init`
-    - segui le istruzioni
-  - `volta pin node`: imposta la versione corrente di Node.js
-
---
-
-# Monorepo (npm workspaces)
-
-Node.js permette di raggrupare diversi progetti in un unico repository git
-
-```
-repository-root
-  - /first-package
-    - package.json <- package di una applicazine
-  - /second-package
-    - package.json
-  - package.json <- package principale
-```
-
---
-
-## Package principale
-
-```json
-{
-  ...
-  "workspaces": ["first-package", "second-package],
-  ...
-}
-```
-
---
-
-## Usare npm in un monorepo
-
-```bash
-npm run script -w first-package
-```
-
-Esegue un comando in un determinato pacchetto del monorepo
-
----
-
-# Ripasso di javascript
+# Javascript - le basi
 
 ---
 
@@ -554,186 +487,44 @@ main();
 
 ---
 
-## [Typescript](https://www.typescriptlang.org/)
-
-E' un **superset** di javascript, cioè "arricchisce" javascript. In particolare, permette di descrivere dettagliatamente ogni tipo di dato e funzione.
-
-- è integrato nell'editor e permette di segnalare errori nel codice
-- può fare il **parsing** del codice per segnalare errori prima della sua esecuzione
-- trasforma il codice typescript in javascript eseguibile nel browser o in node.js (**transpiling**)
+## Mapping con funzioni asincrone
 
 --
 
-Tutto il codice javascript è anche typescript valido.
-
-Typescript, invece deve essere compilato in javascript, per diventare codice javascript valido.
-
---
-
-## Esempio
-
-```typescript
-type User = {
-  name: string,
-  id: number,
-}
- 
-const user: User = {
-  username: "Hayes", // Error: it doesn't match the type
-  id: 0,
-};
-```
-
---
-
-### Vantaggi pratici di typescript
-
-- fornisce suggerimenti durante la scrittura del codice
-- permette di fare refactoring in modo sicuro
-- permette di individuare errori di spelling
-- aggiunge un controllo strict sui quirks&flaws di javascript
-- in fase di compilazione, segnala errori che altrimenti non sarebbero rilevabili in javascript
-
---
-
-> Typescript è uno standard per la realizzazione di applicazioni con un minimo di complessità.
-
----
-
-## Lavorare con molti file
-
-/i/https://youtu.be/5zl1jJGCzVI?si=3RVrZE9Y_HO2KWaz
-
-- [Visually explained: Bundling in 60 seconds](https://youtu.be/5zl1jJGCzVI?si=3RVrZE9Y_HO2KWaz)
-- [Documentazione di `export`](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Statements/export)
-- [Documentazione di `require()` in node.js](https://nodejs.org/docs/v20.18.0/api/modules.html#requireid)
-
---
-
-## Import / export
+Problema: abbiamo un array da mappare su una funzione asincrona
 
 ```js
-// a.js
-
-export const myFunction = () => {/* */}
-export const myVariable = "value";
-```
-
-```js
-// b.js
-// posso importare una o più variabili esportate da un file con export multipli
-import { myFunction, myVariable } from "./a.js"
-
-myFunction(myVariable);
+const result = [1, 2, 3, 4].map(async (id) => {
+  return await getById(id);
+})
 ```
 
 --
 
-## Export default
+Questa funzione ritorna:
 
 ```js
-// a.js
-
-export default myFunction = () => {
-  // ...
-}
+[Promise, Promise, Promise, Promise]
 ```
 
-```js
-// b.js
-// posso assegnare il default alla variabile che voglio
-import myRENAMEDFunction from "./a.js"
-
-myRENAMEDFunction();
-```
-
----
-
-## Framework Node.js per applicazioni server
-
-- Express.js
-- [Koa](https://koajs.com/)  *(useremo questo)*
-- Fastify
-- Nestjs
-- ...molti altri
-
---
-
-## Koa
+mentre ci aspettavamo:
 
 ```js
-import Koa from "koa";
-
-const app = new Koa();
-
-app.listen(3000); // fa partire il server
+["valuea", "value2", "value3", "value4"]
 ```
 
 --
 
-## Middleware
-
-![](./assets/koa-middleware.png)
+Soluzione: `Promise.all()`
 
 ```js
-async function Middleware(ctx, next) {
-  // ... fai qualcosa e modifica ctx (context)
-  await next(); // esegue il prossimo middleware
-  // ... esegue altro codice 
-  // dopo l'esecuzione dei middleware innestati
-}
+const result = Promise.all(
+  [1, 2, 3, 4].map(async (id) => {
+    return await getById(id);
+  })
+);
 ```
 
 --
 
-## Middleware come librerie
-
-```js
-import Koa from "koa";
-import serveStatic from "koa-static";
-import cors from "@koa/cors";
-
-const app = new Koa();
-
-app.use(cors());
-app.use(serveStatic(`./public`, {}));
-
-app.use(async (ctx, next) => {
-  console.log("Incoming HTTP request");
-  await next();
-});
-```
-
---
-
-## Routing
-
-Il server deve comprendere l'url richiesto dall'utente e rispondere in modo appropriato per ciascun url
-
-```js
-import Koa from "koa";
-import Router from "@koa/router";
-
-const app = new Koa();
-const router = new Router();
-
-// pagina html
-router.get("/", (ctx) => {
-  ctx.body = "<p>Home page</p>";
-});
-
-// pagina html
-router.get("/come-funziona", (ctx) => {
-  ctx.body = "<p>Una pagina interna</p>";
-});
-
-// api json
-router.get("/api/exams", (ctx) => {
-  ctx.body = {
-    id: 1,
-    name: "Primo esame",
-    description: "Esempio di risposta api"
-  };
-});
-
-```
+[Approfondisci su MDN](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Promise/all)
