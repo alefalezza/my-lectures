@@ -190,7 +190,9 @@ el.innerHTML = &quot;Contenuto aggiornato&quot;;
             </section>
         
             <section >
-                <pre><code class="language-jsx">function MyComponent(props) {
+                <p>Un componente è una funzione javascript<br>
+che ritorna un altro componente</p>
+<pre><code class="language-jsx">function MyComponent(props) {
   return (
     &lt;div className=&quot;content&quot;&gt;
       {props.textVariable}
@@ -301,7 +303,7 @@ el.innerHTML = &quot;Contenuto aggiornato&quot;;
             </section>
         
             <section >
-                <p>Quando lo stato di un compomente cambia, la funzione che lo rappresenta viene eseguita nuovamente (rendering) con il valore di stato aggiornato.</p>
+                <p>Quando cambia lo stato di un compomente, la funzione che lo rappresenta viene eseguita nuovamente (rendering) con il valore di stato aggiornato.</p>
 
             </section>
         
@@ -323,7 +325,7 @@ el.innerHTML = &quot;Contenuto aggiornato&quot;;
     <section>
         <section >
             <h2>Gestisci lo stato</h2>
-<p>Lo stato è una specie di “memoria interna” di un componente</p>
+<p>Lo stato è la “memoria interna” di un componente</p>
 <pre><code class="language-jsx">function MyButton() {
   const [count, setCount] = useState(0);
   // ...
@@ -430,6 +432,76 @@ el.innerHTML = &quot;Contenuto aggiornato&quot;;
         
             <section >
                 <p><a href="https://react.dev/learn#sharing-data-between-components">Prova ad usare lo <strong>stato condiviso</strong> nell’esempio sulla documentazione ufficiale di React</a></p>
+
+            </section>
+        
+
+    </section>
+    
+
+
+
+    
+    <section>
+        <section >
+            <h2>React Context</h2>
+<p>Quando lo stato di un componente deve essere utilizzato da un altro, che si trova molto lontano nell’alberatura di componenti</p>
+
+            </section>
+        
+            <section >
+                <p>Esempio</p>
+<pre><code class="language-jsx">&lt;ComponentWithState&gt; // questo componente contiene uno stato
+  &lt;Nested&gt;
+    &lt;Nested&gt;
+      &lt;Nested&gt;
+        &lt;Nested&gt;
+          &lt;TargetComponent /&gt; // ...che deve essere usato qui
+        &lt;/Nested&gt;
+      &lt;/Nested&gt;
+    &lt;/Nested&gt;
+  &lt;/Nested&gt;
+&lt;/ComponentWithState&gt;
+</code></pre>
+
+            </section>
+        
+            <section >
+                <pre><code class="language-jsx">function ComponentWithState() {
+  const [state, setState] = useState();
+  return &lt;Nested state={state}/&gt;
+}
+</code></pre>
+<p>Usando la tecnica delle props, il componente Nested fa solo da passacarte</p>
+<pre><code class="language-jsx">function Nested({state}) {
+  return &lt;TargetComponent state={state}/&gt;
+}
+</code></pre>
+
+            </section>
+        
+            <section >
+                <p>Context permette di scavalcare i passacarte e rendere disponbile lo stato a qualsiasi livello innestato</p>
+
+            </section>
+        
+            <section >
+                <pre><code data-trim="" data-line-numbers="1,5,7" class="language-jsx">export const Context = createContext();
+function ComponentWithState() {
+  const [state, setState] = useState();
+  return (
+    &lt;Context.Provider value={state}&gt;
+      &lt;Nested /&gt; // non fa più da passacarte
+    &lt;/Context.Provider&gt;
+  )
+}
+</code></pre>
+<pre><code data-trim="" data-line-numbers="2" class="language-jsx">function TargetComponent() {
+  const state = useContext(Context);
+  // ...utilizza lo stato del componente superiore
+  return &quot;...&quot;
+}
+</code></pre>
 
             </section>
         
