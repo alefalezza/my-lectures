@@ -86,6 +86,9 @@ el.innerHTML = "Contenuto aggiornato";
 
 --
 
+Un componente è una funzione javascript  
+che ritorna un altro componente
+
 ```jsx
 function MyComponent(props) {
   return (
@@ -97,7 +100,6 @@ function MyComponent(props) {
 ```
 
 Gli attributi in react si chiamano **props**
-
 
 --
 
@@ -194,7 +196,7 @@ const Page = () => {
 
 --
 
-Quando lo stato di un compomente cambia, la funzione che lo rappresenta viene eseguita nuovamente (rendering) con il valore di stato aggiornato.
+Quando cambia lo stato di un compomente, la funzione che lo rappresenta viene eseguita nuovamente (rendering) con il valore di stato aggiornato.
 
 --
 
@@ -206,7 +208,7 @@ Quando lo stato di un compomente cambia, la funzione che lo rappresenta viene es
 
 ## Gestisci lo stato
 
-Lo stato è una specie di "memoria interna" di un componente
+Lo stato è la "memoria interna" di un componente
 
 ```jsx
 function MyButton() {
@@ -308,6 +310,73 @@ const Container = () => {
 --
 
 [Prova ad usare lo **stato condiviso** nell'esempio sulla documentazione ufficiale di React](https://react.dev/learn#sharing-data-between-components)
+
+---
+
+## React Context
+
+Quando lo stato di un componente deve essere utilizzato da un altro, che si trova molto lontano nell'alberatura di componenti
+
+--
+
+Esempio
+
+```jsx
+<ComponentWithState> // questo componente contiene uno stato
+  <Nested>
+    <Nested>
+      <Nested>
+        <Nested>
+          <TargetComponent /> // ...che deve essere usato qui
+        </Nested>
+      </Nested>
+    </Nested>
+  </Nested>
+</ComponentWithState>
+```
+
+--
+
+```jsx
+function ComponentWithState() {
+  const [state, setState] = useState();
+  return <Nested state={state}/>
+}
+```
+
+Usando la tecnica delle props, il componente Nested fa solo da passacarte
+
+```jsx
+function Nested({state}) {
+  return <TargetComponent state={state}/>
+}
+```
+
+--
+
+Context permette di scavalcare i passacarte e rendere disponbile lo stato a qualsiasi livello innestato
+
+--
+
+```jsx {data-trim data-line-numbers="1,5,7"}
+export const Context = createContext();
+function ComponentWithState() {
+  const [state, setState] = useState();
+  return (
+    <Context.Provider value={state}>
+      <Nested /> // non fa più da passacarte
+    </Context.Provider>
+  )
+}
+```
+
+```jsx {data-trim data-line-numbers="2"}
+function TargetComponent() {
+  const state = useContext(Context);
+  // ...utilizza lo stato del componente superiore
+  return "..."
+}
+```
 
 ---
 
