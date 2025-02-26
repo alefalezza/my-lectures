@@ -473,7 +473,7 @@ return (
 );
 ```
 
-- usa le funzioni degli array
+- usa i metodi degli array
 
 --
 
@@ -551,6 +551,20 @@ function MyButton({count}) {
 ```
 
 - **rispetta** il flusso di dati, sempre dall'alto verso il basso. Non modificare una proprietà di un componente di livello superiore (in questo esempio: una `prop`) 
+
+--
+
+```jsx {data-trim data-line-numbers="1,3"}
+function MyButton({count, setCount}) {
+  return (
+    <button onClick={() => {setCount(count + 1)}}>
+      Clicked {count} times
+    </button>
+  );
+}
+```
+
+Un componente figlio può modificare lo stato di un genitore, se gli viene fornita la funzione per modificarlo (tramite props o context)
 
 ---
 
