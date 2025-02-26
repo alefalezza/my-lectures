@@ -657,6 +657,10 @@ myRENAMEDFunction();
 - Nestjs
 - ...molti altri
 
+---
+
+## Framework HTTP
+
 --
 
 ## Koa
@@ -668,6 +672,14 @@ const app = new Koa();
 
 app.listen(3000); // fa partire il server
 ```
+
+--
+
+## Middleware
+
+![](./assets/koa-middleware.png)
+
+Organizzazione a buccia di cipolla
 
 --
 
@@ -735,5 +747,88 @@ router.get("/api/exams", (ctx) => {
     description: "Esempio di risposta api"
   };
 });
+
+```
+
+---
+
+## Web socket
+
+![alt text](assets/websocket.png)
+
+--
+
+## Connessione Web socket
+
+- il client si connette al server in HTTP
+- i due si scambiano un messaggio di "handshake"
+- viene stabilita una connessione stabile utilizzando il protocollo `ws`
+- tramite `ws`, sia il server che il cilent inviano e ricevono messaggi
+
+--
+
+## Server e client possono inviarsi messaggi
+
+![alt text](assets/websocket-events.png)
+
+--
+
+## Broadcast
+
+![alt text](assets/websocket-broadcast.png)
+
+--
+
+## Librerie
+
+[Socket.io](https://socket.io/)
+
+--
+
+## Server
+
+```js {data-trim data-line-numbers="4-8"}
+import { createServer } from "http";
+import { Server } from "socket.io";
+const httpServer = createServer();
+
+const io = new Server(httpServer);
+io.on("connection", (socket) => {
+  socket.emit("connected", "Hello");
+  socket.on("some-event", (data) => { /*...*/ })
+})
+
+httpServer.listen(3000);
+```
+
+--
+
+## Server broadcast
+
+```js {data-trim data-line-numbers="7"}
+import { createServer } from "http";
+import { Server } from "socket.io";
+const httpServer = createServer();
+
+const io = new Server(httpServer);
+io.on("connection", (socket) => {
+  io.emit("broadcasted-message", "Sent to all clients");
+})
+
+httpServer.listen(3000);
+```
+
+--
+
+## Client
+
+```js
+const socket = io("http://localhost:3000");
+
+socket.on("connected", (data) => { /*...*/ });
+
+socket.emit("some-event", "Message body");
+
+socket.on("broadcasted-message", (message) => { /*...*/ })
 
 ```
