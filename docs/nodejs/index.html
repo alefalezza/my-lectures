@@ -239,7 +239,7 @@ const proprieta2 = myObject.proprieta2;
             </section>
         
             <section >
-                <h2 Destructuring=""></h2>
+                <h2>{Destructuring}</h2>
 <p>Estrae una o più proprietà di un oggetto e le assegna a delle variabili</p>
 <pre><code class="language-js">const { inputPath, url, postId, tags, ...postContent } = apiPost;
 </code></pre>
@@ -754,8 +754,8 @@ myRENAMEDFunction();
 
 
     
-    <section>
         <section >
+            
             <h2>Framework Node.js per applicazioni server</h2>
 <ul>
 <li>Express.js</li>
@@ -764,6 +764,16 @@ myRENAMEDFunction();
 <li>Nestjs</li>
 <li>…molti altri</li>
 </ul>
+
+            </section>
+    
+
+
+
+    
+    <section>
+        <section >
+            <h2>Framework HTTP</h2>
 
             </section>
         
@@ -775,6 +785,13 @@ const app = new Koa();
 
 app.listen(3000); // fa partire il server
 </code></pre>
+
+            </section>
+        
+            <section >
+                <h2>Middleware</h2>
+<p><img src="./assets/koa-middleware.png" alt=""></p>
+<p>Organizzazione a buccia di cipolla</p>
 
             </section>
         
@@ -837,6 +854,96 @@ router.get(&quot;/api/exams&quot;, (ctx) =&gt; {
     description: &quot;Esempio di risposta api&quot;
   };
 });
+
+</code></pre>
+
+            </section>
+        
+
+    </section>
+    
+
+
+
+    
+    <section>
+        <section >
+            <h2>Web socket</h2>
+<p><img src="assets/websocket.png" alt="alt text"></p>
+
+            </section>
+        
+            <section >
+                <h2>Connessione Web socket</h2>
+<ul>
+<li>il client si connette al server in HTTP</li>
+<li>i due si scambiano un messaggio di “handshake”</li>
+<li>viene stabilita una connessione stabile utilizzando il protocollo <code>ws</code></li>
+<li>tramite <code>ws</code>, sia il server che il cilent inviano e ricevono messaggi</li>
+</ul>
+
+            </section>
+        
+            <section >
+                <h2>Server e client possono inviarsi messaggi</h2>
+<p><img src="assets/websocket-events.png" alt="alt text"></p>
+
+            </section>
+        
+            <section >
+                <h2>Broadcast</h2>
+<p><img src="assets/websocket-broadcast.png" alt="alt text"></p>
+
+            </section>
+        
+            <section >
+                <h2>Librerie</h2>
+<p><a href="https://socket.io/">Socket.io</a></p>
+
+            </section>
+        
+            <section >
+                <h2>Server</h2>
+<pre><code data-trim="" data-line-numbers="4-8" class="language-js">import { createServer } from &quot;http&quot;;
+import { Server } from &quot;socket.io&quot;;
+const httpServer = createServer();
+
+const io = new Server(httpServer);
+io.on(&quot;connection&quot;, (socket) =&gt; {
+  socket.emit(&quot;connected&quot;, &quot;Hello&quot;);
+  socket.on(&quot;some-event&quot;, (data) =&gt; { /*...*/ })
+})
+
+httpServer.listen(3000);
+</code></pre>
+
+            </section>
+        
+            <section >
+                <h2>Server broadcast</h2>
+<pre><code data-trim="" data-line-numbers="7" class="language-js">import { createServer } from &quot;http&quot;;
+import { Server } from &quot;socket.io&quot;;
+const httpServer = createServer();
+
+const io = new Server(httpServer);
+io.on(&quot;connection&quot;, (socket) =&gt; {
+  io.emit(&quot;broadcasted-message&quot;, &quot;Sent to all clients&quot;);
+})
+
+httpServer.listen(3000);
+</code></pre>
+
+            </section>
+        
+            <section >
+                <h2>Client</h2>
+<pre><code class="language-js">const socket = io(&quot;http://localhost:3000&quot;);
+
+socket.on(&quot;connected&quot;, (data) =&gt; { /*...*/ });
+
+socket.emit(&quot;some-event&quot;, &quot;Message body&quot;);
+
+socket.on(&quot;broadcasted-message&quot;, (message) =&gt; { /*...*/ })
 
 </code></pre>
 
