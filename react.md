@@ -158,7 +158,7 @@ const Search = ({ onSearch }) => {
 }
 ```
 
-> pseudo-code: il form non funziona così
+> Attenzione: pseudo-code
 
 --
 
@@ -629,31 +629,30 @@ root.render(<Page />);
 Utilizzare una libreria di componenti (UI Kit): [MUI](https://mui.com/joy-ui/getting-started/)
 
 ```tsx
-export const Header: React.FC = () => {
+export const MyCard: React.FC = () => {
   return (
-    <Stack
-      direction="row"
-      spacing={2}
-      sx={{
-        justifyContent: "space-between",
-        alignItems: "center",
-        paddingTop: "16px",
-      }}
-    >
-      <img src="/logo.svg" height={50} />
-      <Stack direction="row" spacing={2}>
-        <List role="menubar" orientation="horizontal">
-          <ListItem role="none">
-            <ListItemButton role="menuitem" component="a">
-              Gestisci gli studenti
-            </ListItemButton>
-          </ListItem>
-        </List>
-        <Avatar />
+    <Card>
+      <CardMedia
+        component="img"
+        alt="Yosemite National Park"
+        image="/static/images/cards/yosemite.jpeg"
+      />
+      <Stack direction="row" alignItems="center" spacing={3} p={2} useFlexGap>
+        <Stack direction="column" spacing={0.5} useFlexGap>
+          <Typography>Yosemite National Park, California, USA</Typography>
+          <Stack direction="row" spacing={1} useFlexGap>
+            <Chip
+              size="small"
+              label={active ? 'Active' : 'Inactive'}
+              color={active ? 'success' : 'default'}
+            />
+            <Rating defaultValue={4} size="small" />
+          </Stack>
+        </Stack>
+        <Switch checked={active} />
       </Stack>
-    </Stack>
-  );
-};
+    </Card>
+)};
 ```
 
 --
@@ -666,34 +665,18 @@ function App() {
   return (
     <BrowserRouter basename="/">
       <Routes>
-        <Route path="/" element={<Layout />}>
-          <Route index element={<Root />} />
+        <Route index element={<Home />} />
+        <Route path="about" element={<About />} />
 
-          {/* Teacher */}
-          <Route path="teacher" element={<TeacherGuard />}>
-            <Route index element={<Exams />} />
-            <Route path="exam" element={<AddExam />} />
-            <Route path="exam/:id" element={<EditExam />} />
-            <Route path="subscriptions" element={<Subscriptions />} />
-            <Route path="subscriptions/:date" element={<SessionReport />} />
-            <Route
-              path="subscriptions/:date/:id"
-              element={<SubscriptionReport />}
-            />
-          </Route>
-
-          {/* Student */}
-          <Route path="student" element={<StudentGuard />}>
-            <Route index element={<MySubscriptions />} />
-            <Route path="subscribe/:id" element={<Subscribe />} />
-            <Route
-              path="subscriptions/:date/:id"
-              element={<SubscriptionReport />}
-            />
-          </Route>
-
-          {/* Login */}
+        <Route element={<AuthLayout />}>
           <Route path="login" element={<Login />} />
+          <Route path="register" element={<Register />} />
+        </Route>
+
+        <Route path="concerts">
+          <Route index element={<ConcertsHome />} />
+          <Route path=":city" element={<City />} />
+          <Route path="trending" element={<Trending />} />
         </Route>
       </Routes>
     </BrowserRouter>
