@@ -50,7 +50,7 @@ const el = document.querySelector('.content');
 el.innerHTML = "Contenuto aggiornato";
 ```
 
-- `innerHTML` è altamente sconsigliato per ragioni di **sicurezza**
+`innerHTML` è altamente sconsigliato per ragioni di **sicurezza**
 
 ---
 
