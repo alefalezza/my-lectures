@@ -276,18 +276,15 @@ foo();
 Si può passare una funzione come argomento di un'altra funzione
 
 ```js
-function sayHello() {
-  return "Hello, ";
+function eseguiOperazione(operazione, a, b) {
+  return operazione(a, b);
 }
 
-function greeting(helloMessage, name) {
-  console.log(helloMessage() + name);
+function somma(a, b) {
+  return a + b;
 }
 
-// Pass `sayHello` as an argument to `greeting` function
-greeting(sayHello, "JavaScript!");
-
-// Hello, JavaScript!
+eseguiOperazione(somma, 5, 3); // Restituisce 8
 ```
 
 --
@@ -297,11 +294,25 @@ greeting(sayHello, "JavaScript!");
 Una funzione può ritornare una nuova funzione
 
 ```js
-function sayHello() {
-  return () => {
-    console.log("Hello!");
+function creaFunzioneGreeting(saluto) {
+  return function(nome) {
+    return `${saluto}, ${nome}!`;
   };
 }
+
+const salutaInItaliano = creaFunzioneGreeting("Ciao");
+salutaInItaliano("Marco"); // Restituisce "Ciao, Marco!"
+```
+
+--
+
+## First class functions
+
+Le funzioni possono avere proprietà e metodi come gli altri oggetti
+
+```js
+function test() {}
+test.descrizione = "Questa è una funzione di test";
 ```
 
 --
@@ -336,27 +347,6 @@ chiamaPaolo("Rossi");
 ## Approfondisci
 
 [https://it.javascript.info/currying-partials](https://it.javascript.info/currying-partials)
-
---
-
-## Composizione di funzioni
-
-```js
-const famigliaRossi = (nome) => {
-  return nome + " Rossi";
-}
-
-const famigliaBianchi = (nome) => {
-  return nome + " Bianchi";
-}
-
-const chiamaConNomeCompleto = (nome, functionCognome) => {
-  return functionCognome(nome);
-}
-
-chiamaConNomeCompleto("Mario", famigliaBianchi);
-chiamaConNomeCompleto("Paolo", famigliaRossi);
-```
 
 ---
 
