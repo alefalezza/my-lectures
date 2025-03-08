@@ -114,13 +114,22 @@ const myObject = {
 ## Array
 
 ```js
-const myArray = ["valore 1", 123, true, "..."];
+const myArray = [
+  "stringa", 
+  123, 
+  true, 
+  { "proprietàOggetto": "valore" }, 
+  ["array"]
+];
 ```
+
+--
 
 Accedere al valore in una determinata posizione:
 
 ```js
-const primoElementoDellArray = myArray[0]; // "valore 1"
+const primoElementoDellArray = myArray[0]; // "stringa"
+const secondoElementoDellArray = myArray[1]; // 123
 ```
 
 --
@@ -130,14 +139,14 @@ const primoElementoDellArray = myArray[0]; // "valore 1"
 Estrae uno o più elementi di un array e assegnarli ad una variabile
 
 ```js
-const originalArray = ["primo", "secondo", 3];
+const myArray = ["stringa", 2, 3];
 
 // destructuring
-const [primoElemento, secondoElemento, terzoElemento] = originalArray;
+const [primo, secondo, terzo] = myArray;
 
-// > primoElemento === "primo"; 
-// > secondoElemento === "secondo"; 
-// > terzoElemento === 3
+// > primo === "stringa"; 
+// > secondo === 2; 
+// > terzo === 3
 ```
 
 --
@@ -145,12 +154,12 @@ const [primoElemento, secondoElemento, terzoElemento] = originalArray;
 ## [Destructuring]
 
 ```js
-const originalArray = ["primo", "secondo", 3];
+const myArray = ["stringa", "secondo", 3];
 
 // non devi per forza estrarre tutti gli elementi
-const [primoElemento, , terzoElemento] = originalArray;
+const [primo, , terzo] = myArray;
 
-// > primoElemento === "primo"; terzoElemento === 3
+// > primo === "stringa"; terzo === 3
 ```
 
 --
@@ -166,6 +175,18 @@ const myMergedArray = [ 1, 2, 3, ...myArray ];
 
 --
 
+## ...Spread
+
+```js
+function concatStrings(...args) {
+  return args.join(' ');
+}
+
+concatStrings("Hello", "world")
+```
+
+--
+
 ## Metodi degli array
 
 forEach(callback)
@@ -174,14 +195,13 @@ forEach(callback)
 myArray.forEach((el) => {
   el = el + "stringa";
 });
+
+myArray === myArray;
+// vengono modificati gli elementi contenuti nell'array
+// non l'array in sè
 ```
 
 Modifica ogni elemento dell'array, applicando la funzione di callback
-
-```js
-myArray === myArray; // true: 
-// vengono modificati gli elementi dell'array
-```
 
 --
 
@@ -194,14 +214,13 @@ const newArray = myArray.map((el) => {
   el = el + "stringa";
   return el;
 })
+
+newArray !== myArray;
+// il metodo map() genera un nuovo array
 ```
 
 Ritorna un nuovo array, con gli elementi modificati dalla callback
 
-```js
-newArray === myArray; // false
-// il metodo map() genera un nuovo array
-```
 
 --
 
