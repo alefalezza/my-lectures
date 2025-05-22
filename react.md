@@ -2,9 +2,8 @@
 theme: black
 highlightTheme: github-dark
 ---
-# React
 
-ITS 2024-25
+# React
 
 ---
 

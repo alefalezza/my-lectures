@@ -2,9 +2,8 @@
 theme: black
 highlightTheme: github-dark
 ---
-# Node.js
 
-ITS 2024-25
+# Node.js
 
 ---
 
