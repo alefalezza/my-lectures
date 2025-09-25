@@ -48,7 +48,7 @@ nomeLet = {
 };
 ```
 
-Si può fare, ma non è consigliato modificare il tipo di dato di una variabile!
+Si può fare, ma è sconsigliato modificare il tipo di dato di una variabile!
 
 --
 
@@ -59,6 +59,8 @@ Sintassi valida ma non più in uso
 ```js
 var nomeVariabile = "valore";
 ```
+
+al suo posto, utilizza `const` e `let`
 
 ---
 
@@ -90,6 +92,8 @@ Estrae una o più proprietà di un oggetto e le assegna a delle variabili
 const { inputPath, url, postId, tags, ...postContent } = apiPost;
 ```
 
+[Approfondisci su MDN](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Operators/Destructuring)
+
 --
 
 ## ...Spread
@@ -107,6 +111,45 @@ const myObject = {
 };
 
 // > myObject: Object { key0: "zeroth value", key1: "first value", key2: "second value", key3: "third value" }
+```
+
+[Approfondisci su MDN](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Operators/Spread_syntax)
+
+--
+
+## Funzione *Object.entries()*
+
+```js
+const utente = { nome: "Mario", cognome: "Rossi" };
+
+const proprietaUtente = Object.entries(utente);
+
+/*
+proprietaUtente = [
+  ["nome", "Mario"],
+  ["cognome", "Rossi"]
+]
+*/
+```
+
+Genera un array di coppie chiave/valore
+
+--
+
+### Esempio di utilizzo di *Object.entries()*
+
+```js
+const utente = { nome: "Mario", cognome: "Rossi" };
+
+Object.entries(utente).forEach(([chiave, valore]) => {
+  // esegue qualcosa su ciascuna coppia chiave/valore dell'oggetto
+  console.log("- ", chiave, " -> ", valore);
+});
+
+/*
+- nome -> Mario
+- cognome -> Rossi
+*/
 ```
 
 ---
@@ -136,7 +179,7 @@ const secondoElementoDellArray = myArray[1]; // 123
 
 ## [Destructuring]
 
-Estrae uno o più elementi di un array e assegnarli ad una variabile
+Estrae uno o più elementi di un array e li assegna a variabili
 
 ```js
 const myArray = ["stringa", 2, 3];
@@ -148,6 +191,8 @@ const [primo, secondo, terzo] = myArray;
 // > secondo === 2; 
 // > terzo === 3
 ```
+
+(puoi nominare liberamente le variabili)
 
 --
 
@@ -312,7 +357,7 @@ Le funzioni possono avere proprietà e metodi come gli altri oggetti
 
 ```js
 function test() {}
-test.descrizione = "Questa è una funzione di test";
+test.descrizione = "Questa è una proprietà della funzione 'test'";
 ```
 
 --
@@ -336,7 +381,7 @@ const chiama = (nome) => (functionCognome) => {
 // posso chiamarla così:
 chiama("Mario")("Bianchi");
 
-// oppure in diversi step,
+// oppure in più step, 
 // assegnando a una variabile la funzione generata:
 const chiamaPaolo = chiama("Paolo");
 chiamaPaolo("Rossi"); 
@@ -355,28 +400,29 @@ chiamaPaolo("Rossi");
 --
 
 ```js {data-trim data-line-numbers="|13|19|14|15|16|20|7-11|21|1-5|22"}
-function salutamiDopo() {
+function saluta() {
   setTimeout(() => {
     console.log("Ciao");
   }, 1000);
 }
 
-const chiamaDopo = (nome) => {
+const chiama = (nome) => {
   setTimeout(() => {
     console.log("Ehi, " + nome + "!");
   }, 0); // timeout = zero
 }
 
 console.log("Inizio");
-salutamiDopo();
-chiamaDopo("Mario");
+saluta();
+chiama("Mario");
 console.log("Fine");
 
-// Console:
-// Inizio
-// Fine
-// Ehi, Mario!
-// Ciao
+/* Output:
+Inizio
+Fine
+Ehi, Mario!
+Ciao
+*/
 ```
 
 --
@@ -389,7 +435,7 @@ console.log("Fine");
 
 --
 
-## Come posso controllare il flusso di una sequenza di funzioni asincrone?
+## Come posso controllare l'ordine di esecuzione delle funzioni asincrone?
 
 --
 
@@ -411,9 +457,10 @@ const chiama = (nome) => {
 
 saluta(() => chiama("Paolo"));
 
-// Console:
-// Ciao
-// Ehi, Paolo!
+/* Output:
+Ciao
+Ehi, Paolo!
+*/
 ```
 
 --
@@ -426,12 +473,29 @@ Poiché la funzione `saluta()` non passa nessun parametro alla callback,
 `chiama("Paolo")` viene eseguita in una callback che non ha parametri!
 
 ```js
-saluta((/* nessun parametro */) => chiama("Paolo"));
+saluta( function cb(/* nessun parametro */) { chiama("Paolo") } );
 ```
 
 --
 
 ## Promise
+
+- è un oggetto che rappresenta un'operazione asincrona
+- ha 3 metodi:
+  - *then(fn)* -> esegue *fn()* come callback in caso di success
+  - *catch(fn)* -> esegue *fn()* in caso di errore
+  - *finally(fn)* -> esegue *fn()* in entrambi i casi
+
+--
+
+## Promise: vantaggi
+
+- permette di concatenare molte funzioni asincrone una dopo l'altra, invece che una dentro l'altra, come avveniva con le callback
+- permette di gestire gli errori in modo standardizzato
+
+--
+
+## Promise: come si costruisce
 
 ```js {data-trim data-line-numbers="|19|2|5|11|14"}
 function saluta() {
@@ -451,8 +515,43 @@ const chiama = (nome) => {
     }, 0); 
   });
 }
+```
 
-saluta().then(() => chiama("Paolo"));
+--
+
+## Promise: come si usa
+
+```js
+saluta()
+  .then(() => chiama("Paolo"))
+  .then(saluta)
+  .then(() => { console.log("Fine") });
+
+/* Output:
+Ciao
+Ehi, Paolo!
+Ciao
+Fine
+*/
+```
+
+--
+
+## Promise: come si gestiscono gli errori
+
+```js {data-line-numbers="|1|9|1-2|10|1-3|6|11"}
+saluta()
+  .then(() => chiama("Paolo"))
+  .then(() => { throw new Error("Ops, qualcosa è andato storto") })
+  .then(saluta)
+  .then(() => { console.log("Fine") })
+  .catch((err) => console.error(err.message));
+
+/* Output:
+Ciao
+Ehi, Paolo!
+Ops, qualcosa è andato storto
+*/
 ```
 
 --
@@ -465,7 +564,13 @@ saluta().then(() => chiama("Paolo"));
 
 ## Async/await
 
-```js {data-trim data-line-numbers="|26|19|20|21|1-8|4|5|22|10-17|13|14|23"}
+E' una sintassi ancora più comoda per scrivere ed eseguire Promise
+
+--
+
+## Async/await
+
+```js {data-trim data-line-numbers="|26|19|20|29|21|1-8|4|30|5|22|10-17|13|31|14|23|32"}
 async function saluta() {
   return new Promise((resolve) => {
     setTimeout(() => {
@@ -492,6 +597,13 @@ const main = async () => {
 }
 
 main();
+
+/* Output:
+Inizio
+Ciao
+Ehi, Paolo!
+Fine
+*/
 ```
 
 ---
