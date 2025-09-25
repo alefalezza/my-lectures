@@ -80,13 +80,13 @@ el.innerHTML = "Contenuto aggiornato";
 
 - **C**omponente con l'**iniziale maiuscola**
 - attributi `camelCase`
-- gli attributi possono contenere anche numeri, booleani, funzioni, array... \{tra parentesi graffe\}
+- gli attributi possono contenere anche numeri, booleani, funzioni, array... **\{tra parentesi graffe\}**
   - *(in HTML gli attributi sono sempre stringhe)*
 
 --
 
 Un componente è una funzione javascript  
-che ritorna un altro componente
+che ritorna un altro componente/funzione
 
 ```jsx
 function MyComponent(props) {
@@ -117,7 +117,33 @@ const Page = () => (
 );
 ```
 
-Composition: per ottenere applicazioni complesse, combina diversi componenti in una struttura gerarchica, come in HTML
+**Composition**: per ottenere applicazioni complesse, combina diversi componenti in una struttura gerarchica, come in HTML
+
+--
+
+```jsx
+function MyComponent({children}) {
+  return (
+    <div className="content">
+      {children}
+    </div>
+  )
+}
+```
+Per innestare i componenti,  
+utilizza la prop **children**
+
+--
+
+Così:
+
+```jsx {data-trim data-line-numbers="2-4"}
+<MyComponent>
+  <p>
+    Contenuto della variabile <em>children</em>
+  </p>
+</MyComponent>
+```
 
 ---
 
@@ -129,22 +155,23 @@ Facciamo in modo che l'applicazione si comporti in modo dinamico
 
 Passiamo una funzione come parametro a un componente:
 
-```jsx  {data-trim data-line-numbers="|2-6"}
+```jsx  {data-trim data-line-numbers="3-7"}
 <Search 
-  onSearch={async (searchQuery) => {
-    const searchResults = await 
-      fetch('http://api.com/search?' + searchQuery);
-    setContent(searchResults);
-  }} 
+  onSearch={
+    async (searchQuery) => {
+      const searchResults = await 
+        fetch('http://api.com/search?' + searchQuery);
+      setContent(searchResults);
+    }
+  } 
 />
 ```
 
-- le funzioni sono first class objects
-- posso passare una funzione come parametro di un'altra
+Si può fare perché le funzioni sono **first class objects**
 
 --
 
-Ora vediamo come quella funzione viene utilizzata all'interno del componente:
+Ora vediamo come quella funzione viene utilizzata all'interno del componente Search, tramite la prop *onSearch*:
 
 ```jsx {data-trim data-line-numbers="|1|3"}
 const Search = ({ onSearch }) => {
@@ -163,7 +190,7 @@ const Search = ({ onSearch }) => {
 
 Un passo indietro: cos'è quel `setContent`?
 
-```jsx  {data-trim data-line-numbers="|5"}
+```jsx  {data-trim data-line-numbers="5"}
 <Search 
   onSearch={async (searchQuery) => {
     const searchResults = await 
@@ -196,6 +223,28 @@ const Page = () => {
 --
 
 Quando cambia lo stato di un compomente, la funzione che lo rappresenta viene eseguita nuovamente (rendering) con il valore di stato aggiornato.
+
+```mermaid
+graph LR
+  A[User Event] --> B[setState]
+  B --> C[State Updated]
+  C --> D[Component Re-renders]
+  D --> E[UI Updated]
+  
+  style A fill:#e1f5fe
+  style B fill:#fff3e0
+  style C fill:#f3e5f5
+  style D fill:#e8f5e8
+  style E fill:#fce4ec
+```
+
+--
+
+In React, l'interfaccia è una funzione dello stato:
+
+`UI = f(state)`
+
+> Per modificare l'interfaccia bisogna cambiare il suo stato
 
 --
 
@@ -314,7 +363,7 @@ const Container = () => {
 
 ## React Context
 
-Quando lo stato di un componente deve essere utilizzato da un altro, che si trova molto lontano nell'alberatura di componenti
+Si usa quando lo stato di un componente deve essere utilizzato da un altro componente, che si trova molto lontano nell'alberatura
 
 --
 
@@ -393,12 +442,12 @@ Chiameremo questi eventi **side effects**.
 
 --
 
-Oppure, quando avviene un cambiamento di stato deve essere invocata una funzione esterna: anche questo è un **side effect**.
+Oppure, quando avviene un cambiamento di stato e deve essere invocata una funzione esterna: anche questo è un **side effect**.
 
 --
 
 Per gestire i **side effects**  
-utilizzeremo un nuovo *hook* di React:
+utilizzeremo un altro *hook* di React:
 
 ```jsx {data-trim data-line-numbers="3-5"}
 const Component = () => {
@@ -456,7 +505,7 @@ Quando cambia `pageName` viene invocata l'api che va a modificare la variabile `
 </div>
 ```
 
-- se non ti serve `else`, usa l'operatore logico `&&`
+- usa l'operatore logico booleano `&&` al posto di *if()*
 
 --
 
@@ -535,7 +584,7 @@ function MyButton() {
 }
 ```
 
-- **mai** modificare lo stato direttamente, utilizza sempre la funzione `setState` (qui chiamato `setCount`)
+- non modificare lo stato direttamente, utilizza sempre la funzione `setState` (in questo esempio: `setCount`)
 
 --
 
@@ -563,7 +612,7 @@ function MyButton({count, setCount}) {
 }
 ```
 
-Un componente figlio può modificare lo stato di un genitore, se gli viene fornita la funzione per modificarlo (tramite props o context)
+Un componente figlio può modificare lo stato di un genitore, se gli viene fornita una funzione per modificarlo (tramite props o context)
 
 ---
 
