@@ -606,6 +606,20 @@ Fine
 */
 ```
 
+--
+
+## Async/await: come si gestiscono gli errori
+
+```js
+try {
+  main();
+} catch(err) {
+  console.error(err);
+}
+```
+
+...come se si trattasse di codice sincrono
+
 ---
 
 ## Mapping con funzioni asincrone
