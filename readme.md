@@ -10,5 +10,6 @@ Nel caso tu abbia fretta di consultarle, in questo repository trovi anche le ver
 
 ## Indice delle lezioni
 
+- [Javascript](./javascript.md) ([pdf](./javascript.pdf), [html](./docs/javascript/index.html))
 - [Node.js](./nodejs.md) ([pdf](./nodejs.pdf), [html](./docs/nodejs/index.html))
 - [React](./react.md) ([pdf](./react.pdf), [html](./docs/react/index.html))

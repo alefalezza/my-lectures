@@ -72,7 +72,6 @@
         <section >
             
             <h1>React</h1>
-<p>ITS 2024-25</p>
 
             </section>
     
@@ -123,9 +122,7 @@
 
 el.innerHTML = &quot;Contenuto aggiornato&quot;;
 </code></pre>
-<ul>
-<li><code>innerHTML</code> è altamente sconsigliato per ragioni di <strong>sicurezza</strong></li>
-</ul>
+<p><code>innerHTML</code> è altamente sconsigliato per ragioni di <strong>sicurezza</strong></p>
 
             </section>
         
@@ -180,7 +177,7 @@ el.innerHTML = &quot;Contenuto aggiornato&quot;;
 <ul>
 <li><strong>C</strong>omponente con l’<strong>iniziale maiuscola</strong></li>
 <li>attributi <code>camelCase</code></li>
-<li>gli attributi possono contenere anche numeri, booleani, funzioni, array… {tra parentesi graffe}
+<li>gli attributi possono contenere anche numeri, booleani, funzioni, array… <strong>{tra parentesi graffe}</strong>
 <ul>
 <li><em>(in HTML gli attributi sono sempre stringhe)</em></li>
 </ul>
@@ -191,7 +188,7 @@ el.innerHTML = &quot;Contenuto aggiornato&quot;;
         
             <section >
                 <p>Un componente è una funzione javascript<br>
-che ritorna un altro componente</p>
+che ritorna un altro componente/funzione</p>
 <pre><code class="language-jsx">function MyComponent(props) {
   return (
     &lt;div className=&quot;content&quot;&gt;
@@ -218,7 +215,32 @@ che ritorna un altro componente</p>
   &lt;/Layout&gt;
 );
 </code></pre>
-<p>Composition: per ottenere applicazioni complesse, combina diversi componenti in una struttura gerarchica, come in HTML</p>
+<p><strong>Composition</strong>: per ottenere applicazioni complesse, combina diversi componenti in una struttura gerarchica, come in HTML</p>
+
+            </section>
+        
+            <section >
+                <pre><code class="language-jsx">function MyComponent({children}) {
+  return (
+    &lt;div className=&quot;content&quot;&gt;
+      {children}
+    &lt;/div&gt;
+  )
+}
+</code></pre>
+<p>Per innestare i componenti,<br>
+utilizza la prop <strong>children</strong></p>
+
+            </section>
+        
+            <section >
+                <p>Così:</p>
+<pre><code data-trim="" data-line-numbers="2-4" class="language-jsx">&lt;MyComponent&gt;
+  &lt;p&gt;
+    Contenuto della variabile &lt;em&gt;children&lt;/em&gt;
+  &lt;/p&gt;
+&lt;/MyComponent&gt;
+</code></pre>
 
             </section>
         
@@ -238,23 +260,22 @@ che ritorna un altro componente</p>
         
             <section >
                 <p>Passiamo una funzione come parametro a un componente:</p>
-<pre><code data-trim="" data-line-numbers="|2-6" class="language-jsx">&lt;Search 
-  onSearch={async (searchQuery) =&gt; {
-    const searchResults = await 
-      fetch('http://api.com/search?' + searchQuery);
-    setContent(searchResults);
-  }} 
+<pre><code data-trim="" data-line-numbers="3-7" class="language-jsx">&lt;Search 
+  onSearch={
+    async (searchQuery) =&gt; {
+      const searchResults = await 
+        fetch('http://api.com/search?' + searchQuery);
+      setContent(searchResults);
+    }
+  } 
 /&gt;
 </code></pre>
-<ul>
-<li>le funzioni sono first class objects</li>
-<li>posso passare una funzione come parametro di un’altra</li>
-</ul>
+<p>Si può fare perché le funzioni sono <strong>first class objects</strong></p>
 
             </section>
         
             <section >
-                <p>Ora vediamo come quella funzione viene utilizzata all’interno del componente:</p>
+                <p>Ora vediamo come quella funzione viene utilizzata all’interno del componente Search, tramite la prop <em>onSearch</em>:</p>
 <pre><code data-trim="" data-line-numbers="|1|3" class="language-jsx">const Search = ({ onSearch }) =&gt; {
   return (
     &lt;form onSubmit={ () =&gt; onSearch(what) }&gt;
@@ -265,14 +286,14 @@ che ritorna un altro componente</p>
 }
 </code></pre>
 <blockquote>
-<p>pseudo-code: il form non funziona così</p>
+<p>Attenzione: pseudo-code</p>
 </blockquote>
 
             </section>
         
             <section >
                 <p>Un passo indietro: cos’è quel <code>setContent</code>?</p>
-<pre><code data-trim="" data-line-numbers="|5" class="language-jsx">&lt;Search 
+<pre><code data-trim="" data-line-numbers="5" class="language-jsx">&lt;Search 
   onSearch={async (searchQuery) =&gt; {
     const searchResults = await 
       fetch('http://api.com/search?' + searchQuery);
@@ -304,6 +325,16 @@ che ritorna un altro componente</p>
         
             <section >
                 <p>Quando cambia lo stato di un compomente, la funzione che lo rappresenta viene eseguita nuovamente (rendering) con il valore di stato aggiornato.</p>
+<pre style="all:unset;"><div><img class="mermaid" src="https://kroki.io/mermaid/svg/eNpNzMELgjAUx_G7f8WDzkJhA-kQ6Nwh6GR4Gh5Ef68CU9lG0H_fHDmCB4PPd-_dTbc86FonRIVuLAypNybXUpqeqdQW7uY6h9b3MpjUAahZBv8Ma5AhVFrOr2We_DbVSA2mAcauvQpd6ebyv-XHus8IKoif43ja4cCCEbn8MTNn2EeWG2cQLCJX25GcBfLIavvd44g--QJZKkdP" /></div></pre>
+
+            </section>
+        
+            <section >
+                <p>In React, l’interfaccia è una funzione dello stato:</p>
+<p><code>UI = f(state)</code></p>
+<blockquote>
+<p>Per modificare l’interfaccia bisogna cambiare il suo stato</p>
+</blockquote>
 
             </section>
         
@@ -445,7 +476,7 @@ che ritorna un altro componente</p>
     <section>
         <section >
             <h2>React Context</h2>
-<p>Quando lo stato di un componente deve essere utilizzato da un altro, che si trova molto lontano nell’alberatura di componenti</p>
+<p>Si usa quando lo stato di un componente deve essere utilizzato da un altro componente, che si trova molto lontano nell’alberatura</p>
 
             </section>
         
@@ -527,13 +558,13 @@ function ComponentWithState() {
             </section>
         
             <section >
-                <p>Oppure, quando avviene un cambiamento di stato deve essere invocata una funzione esterna: anche questo è un <strong>side effect</strong>.</p>
+                <p>Oppure, quando avviene un cambiamento di stato e deve essere invocata una funzione esterna: anche questo è un <strong>side effect</strong>.</p>
 
             </section>
         
             <section >
                 <p>Per gestire i <strong>side effects</strong><br>
-utilizzeremo un nuovo <em>hook</em> di React:</p>
+utilizzeremo un altro <em>hook</em> di React:</p>
 <pre><code data-trim="" data-line-numbers="3-5" class="language-jsx">const Component = () =&gt; {
 
   useEffect(() =&gt; {
@@ -595,7 +626,7 @@ visualizzare il contenuto di una pagina</p>
 &lt;/div&gt;
 </code></pre>
 <ul>
-<li>se non ti serve <code>else</code>, usa l’operatore logico <code>&amp;&amp;</code></li>
+<li>usa l’operatore logico booleano <code>&amp;&amp;</code> al posto di <em>if()</em></li>
 </ul>
 
             </section>
@@ -687,7 +718,7 @@ export default function MyApp() {
 }
 </code></pre>
 <ul>
-<li><strong>mai</strong> modificare lo stato direttamente, utilizza sempre la funzione <code>setState</code> (qui chiamato <code>setCount</code>)</li>
+<li>non modificare lo stato direttamente, utilizza sempre la funzione <code>setState</code> (in questo esempio: <code>setCount</code>)</li>
 </ul>
 
             </section>
@@ -716,7 +747,7 @@ export default function MyApp() {
   );
 }
 </code></pre>
-<p>Un componente figlio può modificare lo stato di un genitore, se gli viene fornita la funzione per modificarlo (tramite props o context)</p>
+<p>Un componente figlio può modificare lo stato di un genitore, se gli viene fornita una funzione per modificarlo (tramite props o context)</p>
 
             </section>
         
@@ -813,31 +844,30 @@ root.render(&lt;Page /&gt;);
         
             <section >
                 <p>Utilizzare una libreria di componenti (UI Kit): <a href="https://mui.com/joy-ui/getting-started/">MUI</a></p>
-<pre><code class="language-tsx">export const Header: React.FC = () =&gt; {
+<pre><code class="language-tsx">export const MyCard: React.FC = () =&gt; {
   return (
-    &lt;Stack
-      direction=&quot;row&quot;
-      spacing={2}
-      sx={{
-        justifyContent: &quot;space-between&quot;,
-        alignItems: &quot;center&quot;,
-        paddingTop: &quot;16px&quot;,
-      }}
-    &gt;
-      &lt;img src=&quot;/logo.svg&quot; height={50} /&gt;
-      &lt;Stack direction=&quot;row&quot; spacing={2}&gt;
-        &lt;List role=&quot;menubar&quot; orientation=&quot;horizontal&quot;&gt;
-          &lt;ListItem role=&quot;none&quot;&gt;
-            &lt;ListItemButton role=&quot;menuitem&quot; component=&quot;a&quot;&gt;
-              Gestisci gli studenti
-            &lt;/ListItemButton&gt;
-          &lt;/ListItem&gt;
-        &lt;/List&gt;
-        &lt;Avatar /&gt;
+    &lt;Card&gt;
+      &lt;CardMedia
+        component=&quot;img&quot;
+        alt=&quot;Yosemite National Park&quot;
+        image=&quot;/static/images/cards/yosemite.jpeg&quot;
+      /&gt;
+      &lt;Stack direction=&quot;row&quot; alignItems=&quot;center&quot; spacing={3} p={2} useFlexGap&gt;
+        &lt;Stack direction=&quot;column&quot; spacing={0.5} useFlexGap&gt;
+          &lt;Typography&gt;Yosemite National Park, California, USA&lt;/Typography&gt;
+          &lt;Stack direction=&quot;row&quot; spacing={1} useFlexGap&gt;
+            &lt;Chip
+              size=&quot;small&quot;
+              label={active ? 'Active' : 'Inactive'}
+              color={active ? 'success' : 'default'}
+            /&gt;
+            &lt;Rating defaultValue={4} size=&quot;small&quot; /&gt;
+          &lt;/Stack&gt;
+        &lt;/Stack&gt;
+        &lt;Switch checked={active} /&gt;
       &lt;/Stack&gt;
-    &lt;/Stack&gt;
-  );
-};
+    &lt;/Card&gt;
+)};
 </code></pre>
 
             </section>
@@ -849,34 +879,18 @@ root.render(&lt;Page /&gt;);
   return (
     &lt;BrowserRouter basename=&quot;/&quot;&gt;
       &lt;Routes&gt;
-        &lt;Route path=&quot;/&quot; element={&lt;Layout /&gt;}&gt;
-          &lt;Route index element={&lt;Root /&gt;} /&gt;
+        &lt;Route index element={&lt;Home /&gt;} /&gt;
+        &lt;Route path=&quot;about&quot; element={&lt;About /&gt;} /&gt;
 
-          {/* Teacher */}
-          &lt;Route path=&quot;teacher&quot; element={&lt;TeacherGuard /&gt;}&gt;
-            &lt;Route index element={&lt;Exams /&gt;} /&gt;
-            &lt;Route path=&quot;exam&quot; element={&lt;AddExam /&gt;} /&gt;
-            &lt;Route path=&quot;exam/:id&quot; element={&lt;EditExam /&gt;} /&gt;
-            &lt;Route path=&quot;subscriptions&quot; element={&lt;Subscriptions /&gt;} /&gt;
-            &lt;Route path=&quot;subscriptions/:date&quot; element={&lt;SessionReport /&gt;} /&gt;
-            &lt;Route
-              path=&quot;subscriptions/:date/:id&quot;
-              element={&lt;SubscriptionReport /&gt;}
-            /&gt;
-          &lt;/Route&gt;
-
-          {/* Student */}
-          &lt;Route path=&quot;student&quot; element={&lt;StudentGuard /&gt;}&gt;
-            &lt;Route index element={&lt;MySubscriptions /&gt;} /&gt;
-            &lt;Route path=&quot;subscribe/:id&quot; element={&lt;Subscribe /&gt;} /&gt;
-            &lt;Route
-              path=&quot;subscriptions/:date/:id&quot;
-              element={&lt;SubscriptionReport /&gt;}
-            /&gt;
-          &lt;/Route&gt;
-
-          {/* Login */}
+        &lt;Route element={&lt;AuthLayout /&gt;}&gt;
           &lt;Route path=&quot;login&quot; element={&lt;Login /&gt;} /&gt;
+          &lt;Route path=&quot;register&quot; element={&lt;Register /&gt;} /&gt;
+        &lt;/Route&gt;
+
+        &lt;Route path=&quot;concerts&quot;&gt;
+          &lt;Route index element={&lt;ConcertsHome /&gt;} /&gt;
+          &lt;Route path=&quot;:city&quot; element={&lt;City /&gt;} /&gt;
+          &lt;Route path=&quot;trending&quot; element={&lt;Trending /&gt;} /&gt;
         &lt;/Route&gt;
       &lt;/Routes&gt;
     &lt;/BrowserRouter&gt;
