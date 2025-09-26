@@ -1,0 +1,759 @@
+<!doctype html>
+<html lang="en">
+
+<head>
+  <meta charset="utf-8">
+
+  <title>Reveal JS presentation</title>
+
+  <meta name="description" content="A framework for easily creating beautiful presentations using HTML">
+  <meta name="author" content="Hakim El Hattab">
+
+  <meta name="apple-mobile-web-app-capable" content="yes">
+  <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
+
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+  <link rel="stylesheet" href="libs/reveal.js/4.3.1/reset.css">
+  <link rel="stylesheet" href="libs/reveal.js/4.3.1/reveal.css">
+
+  <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/font-awesome/4.5.0/css/font-awesome.min.css">
+
+  <!-- highlight Theme -->
+  
+  <link rel="stylesheet" href="libs/highlight.js/11.3.1/styles/github-dark.min.css">
+  
+	
+		
+	<link rel="stylesheet" href="libs/reveal.js/4.3.1/plugin/chalkboard/style.css">
+	
+	
+	
+  <link rel="stylesheet" href="libs/reveal.js/4.3.1/plugin/customcontrols/style.css">
+  
+	
+
+
+
+  <!-- Revealjs Theme -->
+  
+  <link rel="stylesheet" href="libs/reveal.js/4.3.1/theme/black.css" id="theme">
+  
+  
+
+  <link rel="stylesheet" href="libs/styles/tasklist.css">
+	<link rel="stylesheet" href="libs/styles/iota.css">
+	<link rel="stylesheet" href="libs/styles/layout.css">
+
+
+  <!-- Revealjs Theme -->
+  
+
+   <!-- css list -->
+	
+
+   
+
+</head>
+
+<body>
+
+   
+
+  <div class="reveal">
+
+    <!-- Any section element inside of this container is displayed as a slide -->
+    <div class="slides">
+
+      
+
+
+    
+        <section >
+            
+            <h1>Typescript</h1>
+
+            </section>
+    
+
+
+
+    
+    <section>
+        <section >
+            <h2>Javascript è Typescript</h2>
+<p>(valido)</p>
+
+            </section>
+        
+            <section >
+                <ul>
+<li>Typescript è un <em>superset</em> di javascript</li>
+<li>Codice javascript corretto = codice typescript corretto</li>
+<li>Typescript aggiunge <em>static type checking</em> a javascript</li>
+</ul>
+
+            </section>
+        
+            <section >
+                <ul>
+<li>estensione dei file javascript: <em>.js</em> / <em>.jsx</em></li>
+<li>estensione dei file typescript: <em>.ts</em> / <em>.tsx</em></li>
+</ul>
+
+            </section>
+        
+            <section >
+                <p><code>npm install typescript</code></p>
+
+            </section>
+        
+            <section >
+                <h2>Typescript non viene eseguito direttamente</h2>
+<p><code>tsc hello.ts</code></p>
+<p>Genera un file <code>hello.js</code> che può essere eseguito in un browser o in Node.js (o altro ambiente javascript).</p>
+
+            </section>
+        
+            <section >
+                <h2>tsc: typecript compiler</h2>
+<p>Durante il “transpiling” di un file, typescript controlla che il codice sia coerente e riporta errori e warning se trova qualche errore.</p>
+
+            </section>
+        
+
+    </section>
+    
+
+
+
+    
+    <section>
+        <section >
+            <h2>Tipi semplici</h2>
+<pre><code class="language-ts">const nome: string = &quot;Mario&quot;;
+const today: Date = new Date();
+const eta: number = 23;
+const presente: boolean = false;
+const classe: &quot;mouse&quot; | &quot;samba&quot; = &quot;mouse&quot;; // string literal union type
+const preferenze: string[] = [&quot;react&quot;, &quot;htnl&quot;] // array di stringhe
+</code></pre>
+
+            </section>
+        
+            <section >
+                <h2>Null e undefined</h2>
+<ul>
+<li><code>null</code>: è un valore, di tipo nullo</li>
+<li><code>undefined</code>: non è un valore, viene restituito quando una variabile non è presente</li>
+</ul>
+
+            </section>
+        
+            <section >
+                <h2>Null</h2>
+<pre><code class="language-ts">const nickName: string | null = null;
+</code></pre>
+
+            </section>
+        
+            <section >
+                <h2>Undefined</h2>
+<pre><code class="language-ts">type Person = {
+  name: string,
+  nickName: string | undefined // same as: nickName?: string
+}
+</code></pre>
+
+            </section>
+        
+            <section >
+                <h2>Any e Unknown</h2>
+<pre><code class="language-ts">function f1(a: any) {
+  a.b(); // OK
+}
+
+function f2(a: unknown) {
+  a.b();
+// error: 'a' is of type 'unknown'.
+}
+</code></pre>
+<p>Entrambi i tipi accettano qualsiasi cosa, ma con <em>unknown</em> non si può fare nulla</p>
+
+            </section>
+        
+            <section >
+                <h2>Uso di Unknown</h2>
+<pre><code class="language-ts">interface Box {
+  contents: unknown;
+}
+ 
+let x: Box = {
+  contents: &quot;hello world&quot;, // accetta qualsiasi tipo
+};
+</code></pre>
+
+            </section>
+        
+
+    </section>
+    
+
+
+
+    
+    <section>
+        <section >
+            <h2>Tipi meno semplici</h2>
+
+            </section>
+        
+            <section >
+                <h2>Tuple</h2>
+<p>Un array di cui è conosciuto il numero di elementi e il tipo di ciascuno di essi</p>
+<pre><code class="language-ts">type SetStateFn = (v: string) =&gt; string; 
+// semplificazione, in realtà il tipo di React è più complesso
+
+const [state, setState]: [string, SetStateFn] = useState(&quot;initial value&quot;);
+</code></pre>
+
+            </section>
+        
+            <section >
+                <h2>Union types</h2>
+<pre><code class="language-ts">const dataDiNascita: string | Date = &quot;10/03/2001&quot;; 
+// potrebbe anche essere: new Date(2001, 3, 10);
+
+const id: string | number = &quot;15&quot;; // stringa
+// sarebbe valido usare anche il numero 15 
+
+const preferenze: string | string[] = &quot;giallo&quot;; 
+// anche [&quot;giallo&quot;, &quot;blu&quot;] è valido
+</code></pre>
+
+            </section>
+        
+            <section >
+                <h2>Union types di stringhe</h2>
+<pre><code class="language-ts">
+const alignment: &quot;left&quot; | &quot;center&quot; | &quot;right&quot; = &quot;center&quot;;
+
+</code></pre>
+<p>Utile quando il valore stringa deve essere ridotto a un set finito di opzioni</p>
+
+            </section>
+        
+            <section >
+                <h2>Generics</h2>
+<pre><code class="language-ts">interface Box&lt;Type&gt; {
+  contents: Type;
+}
+
+let box1: Box&lt;string&gt; = { contents: &quot;hello world&quot; };
+let box2: Box&lt;number&gt; = { contents: 20 };
+</code></pre>
+<p>Invece di usare <em>unknown</em>, usiamo un tipo generico che accetta un parametro per descrivere una proprietà interna</p>
+
+            </section>
+        
+
+    </section>
+    
+
+
+
+    
+    <section>
+        <section >
+            <h2>Oggetti</h2>
+<pre><code data-trim="" data-line-numbers="|2-3|5-6" class="language-ts">const coordinates: {
+  latitude: number,
+  longitude: number
+} = {
+  latitude: 0.543,
+  longitude: 10.345
+}
+</code></pre>
+
+            </section>
+        
+            <section >
+                <h2>Type aliases</h2>
+<p>Un modo più leggibile per rappresentare l’oggetto precedente:</p>
+<pre><code class="language-ts">type Coord = {latitude: number, longitude: number};
+
+const coordinates: Coord = {
+  latitude: 0.543,
+  longitude: 10.345
+}
+</code></pre>
+
+            </section>
+        
+            <section >
+                <h2>Proprietà opzionali</h2>
+<pre><code class="language-ts">type Person = {
+  firstName: string,
+  lastName: string,
+  nickName?: string // questo parametro è opzionale (può essere undefined)
+}
+</code></pre>
+
+            </section>
+        
+            <section >
+                <h2>Intersection types</h2>
+<pre><code class="language-ts">type Person = {
+  firstName: string,
+  lastName: string,
+}
+
+type Student = Person &amp; {
+  school: string
+}
+
+const Mario: Student = {
+  firstName: &quot;Mario&quot;,
+  lastName: &quot;Rossi&quot;,
+  school: &quot;ITS&quot;
+}
+</code></pre>
+
+            </section>
+        
+
+    </section>
+    
+
+
+
+    
+    <section>
+        <section >
+            <h2>Funzioni: tipizzazione dei parametri</h2>
+<pre><code class="language-ts">// Parameter type annotation
+function greet(name: string) {
+  console.log(&quot;Hello, &quot; + name.toUpperCase() + &quot;!!&quot;);
+}
+</code></pre>
+
+            </section>
+        
+            <section >
+                <h2>Funzioni: return type</h2>
+<pre><code class="language-ts">function getFavoriteNumber(): number {
+  return 26;
+}
+</code></pre>
+
+            </section>
+        
+            <section >
+                <h2>Funzioni asincrone</h2>
+<pre><code class="language-ts">async function getFavoriteNumber(): Promise&lt;number&gt; {
+  return 26;
+}
+</code></pre>
+
+            </section>
+        
+            <section >
+                <h2>Arrow functions</h2>
+<pre><code class="language-ts">type MultiplyFn = (a: number, b: number) =&gt; number;
+
+const multiply: MultiplyFn = (a, b) =&gt; {
+  return a * b;
+}
+
+const result = multiply(2, 3); // result is a number
+</code></pre>
+
+            </section>
+        
+            <section >
+                <h2>Generics</h2>
+<pre><code class="language-ts">function firstElement&lt;Type&gt;(arr: Type[]): Type | undefined {
+  return arr[0];
+}
+
+// s is of type 'string'
+const s = firstElement([&quot;a&quot;, &quot;b&quot;, &quot;c&quot;]);
+
+// n is of type 'number'
+const n = firstElement([1, 2, 3]);
+
+// u is of type undefined
+const u = firstElement([]);
+</code></pre>
+<p>Il tipo di valore ritornato non è noto a priori, dipende dall’input</p>
+
+            </section>
+        
+            <section >
+                <h2>Rest parameters &amp; arguments</h2>
+<pre><code class="language-ts">function multiply(n: number, ...m: number[]) {
+  return m.map((x) =&gt; n * x);
+}
+
+const a = multiply(10, 2, 3, 4, 5); // n = 10; m = [2, 3, 4, 5]
+// 'a' = [20, 30, 40, 50]
+</code></pre>
+
+            </section>
+        
+
+    </section>
+    
+
+
+
+    
+    <section>
+        <section >
+            <h2>Tipi di React</h2>
+<pre><code class="language-bash">npm install —D @types/react @types/react-dom
+</code></pre>
+<p>React non contiene le definizioni dei tipi, devono essere installate a parte</p>
+
+            </section>
+        
+            <section >
+                <h2>Component</h2>
+<pre><code data-trim="" data-line-numbers="5,11" class="language-tsx">type AppProps = {
+  greet: string
+}
+
+const App: React.FunctionComponent&lt;AppProps&gt; = ({ greet }) =&gt; {
+  return &lt;div&gt;Hello {greet}&lt;/div&gt;
+}
+
+// Il tipo FunctionComponent ha un alias FC, 
+// che viene usato più di frequente:
+const App = React.FC&lt;AppProps&gt; = (...) =&gt; {...} 
+</code></pre>
+
+            </section>
+        
+            <section >
+                <h2>State</h2>
+<pre><code class="language-tsx">const [user, setUser] = useState&lt;User | null&gt;(null);
+</code></pre>
+
+            </section>
+        
+            <section >
+                <h2>Context</h2>
+<pre><code class="language-tsx">import { createContext } from &quot;react&quot;;
+
+type ThemeContextType = &quot;light&quot; | &quot;dark&quot;;
+
+const ThemeContext = createContext&lt;ThemeContextType&gt;(&quot;light&quot;);
+</code></pre>
+
+            </section>
+        
+            <section >
+                <h2>DOM elements</h2>
+<pre><code class="language-tsx">const divRef = useRef&lt;HTMLDivElement&gt;(null);
+</code></pre>
+
+            </section>
+        
+            <section >
+                <h2>DOM events</h2>
+<pre><code class="language-tsx">function handleChange(event: React.ChangeEvent&lt;HTMLInputElement&gt;) {
+  setValue(event.currentTarget.value);
+}
+</code></pre>
+
+            </section>
+        
+            <section >
+                <h2>Children</h2>
+<pre><code data-trim="" data-line-numbers="3" class="language-tsx">type ModalRendererProps = {
+  title: string;
+  children: React.ReactNode; // accetta copmonenti, stringhe, numeri...
+}
+</code></pre>
+<pre><code data-trim="" data-line-numbers="3" class="language-tsx">type ModalRendererProps = {
+  title: string;
+  children: React.ReactElement; // accetta solo componenti React, più restrittivo
+}
+</code></pre>
+
+            </section>
+        
+            <section >
+                <h2>Style props</h2>
+<pre><code data-trim="" data-line-numbers="2" class="language-tsx">type MyComponentProps = {
+  style: React.CSSProperties;
+}
+</code></pre>
+
+            </section>
+        
+            <section >
+                <h2>Approfondisci</h2>
+<p><a href="https://react.dev/learn/typescript">https://react.dev/learn/typescript</a></p>
+
+            </section>
+        
+
+    </section>
+    
+
+
+    </div>
+
+
+  </div>
+
+  <div class="line top"></div>
+  <div class="line bottom"></div>
+  <div class="line left"></div>
+  <div class="line right"></div>
+
+  <script src="libs/reveal.js/4.3.1/reveal.js"></script>
+<script src="libs/reveal.js/4.3.1/plugin/notes/notes.js"></script>
+<script src="libs/reveal.js/4.3.1/plugin/markdown/markdown.js"></script>
+<script src="libs/reveal.js/4.3.1/plugin/highlight/highlight.js"></script>
+<script src="libs/reveal.js/4.3.1/plugin/math/math.js"></script>
+<script src="libs/reveal.js/4.3.1/plugin/fullscreen/plugin.js"></script>
+<script src="libs/reveal.js/4.3.1/plugin/animate/plugin.js"></script>
+<script src="libs/reveal.js/4.3.1/plugin/animate/svg.min.js"></script>
+<script src="libs/reveal.js/4.3.1/plugin/anything/plugin.js"></script>
+<script src="libs/reveal.js/4.3.1/plugin/anything/Chart.min.js"></script>
+<script src="libs/reveal.js/4.3.1/plugin/anything/d3/d3.v3.min.js"></script>
+<script src="libs/reveal.js/4.3.1/plugin/anything/d3.patch.js"></script>
+<script src="libs/reveal.js/4.3.1/plugin/anything/d3/queue.v1.min.js"></script>
+<script src="libs/reveal.js/4.3.1/plugin/anything/d3/topojson.v1.min.js"></script>
+<script src="libs/reveal.js/4.3.1/plugin/anything/function-plot.js"></script>
+<script src="libs/reveal.js/4.3.1/plugin/customcontrols/plugin.js"></script>
+<script src="libs/reveal.js/4.3.1/plugin/embed-tweet/plugin.js"></script>
+<script src="libs/reveal.js/4.3.1/plugin/chart/chart.min.js"></script>
+<script src="libs/reveal.js/4.3.1/plugin/chart/plugin.js"></script>
+<script src="libs/reveal.js/4.3.1/plugin/verticator/verticator.js"></script>
+
+<script src="libs/reveal.js/4.3.1/plugin/zoom/zoom.js"></script>
+<script src="libs/reveal.js/4.3.1/plugin/search/search.js"></script>
+<script src="libs/reveal.js/4.3.1/plugin/menu/menu.js"></script>
+<script src="libs/reveal.js/4.3.1/plugin/chalkboard/plugin.js"></script>
+
+<!--	<script src="libs/reveal.js/4.3.1/plugin/audio-slideshow/plugin.js"></script>  -->
+<!--	<script src="libs/reveal.js/4.3.1/plugin/audio-slideshow/recorder.js"></script>-->
+<!--	<script src="libs/reveal.js/4.3.1/plugin/audio-slideshow/RecordRTC.js"></script>-->
+
+  
+
+<script>
+  const printPlugins = [
+      RevealNotes,
+      RevealHighlight,
+      RevealMath.MathJax3,
+      RevealAnimate,
+      RevealChalkboard, 
+			RevealEmbedTweet,
+			RevealChart,
+		];
+
+		const plugins =  [...printPlugins,
+		RevealZoom, 
+		RevealSearch, 
+				RevealMarkdown, 
+				RevealMenu, 
+				RevealFullscreen,
+				RevealAnything,
+				//RevealAudioSlideshow,
+				//RevealAudioRecorder,
+				RevealCustomControls, 
+				// poll
+				// question
+				// seminar
+				Verticator 
+				 ]
+
+
+		// Also available as an ES module, see:
+		// https://revealjs.com/initialization/
+		Reveal.initialize({
+			controls: true,
+      controlsTutorial: true,
+      controlsLayout: 'bottom-right',
+      controlsBackArrows: 'faded',
+      progress: true,
+      slideNumber: false,
+      //#showSlideNumber "all" "print" "speaker"
+      hash: true, //# hash: false,
+      //# respondToHashChanges: true,
+      //# history: false,
+      keyboard: true,
+      //#keyboardCondition: null,
+      overview: true,
+      center: true,
+      touch: true,
+      loop: false,
+      rtl: false,
+      //#navigationMode: 'default', linear grid
+      shuffle: false,
+      fragments: true,
+      fragmentInURL: false,
+      embedded: false,
+      help: true,
+      //#pause: true
+      showNotes: false,
+      autoPlayMedia: false, // TODO fix this to a nullable value
+      //#preloadIframes: null. true false
+      //#autoAnimate: true
+      //#autoAnimateMatcher: null,
+      //#autoAnimateEasing: 'ease',
+      //autoAnimateDuration: 1.0,
+      //#autoAnimateUnmatched: true
+      //#autoAnimateStyles: []
+      autoSlide: 0, // TODO fix this to a falseable value
+      autoSlideStoppable: true,
+      autoSlideMethod: '0',
+      defaultTiming: 120,
+      mouseWheel: false,
+      //#previewLinks: false
+      //#postMessage: true, // TODO : this can cause issues with the vscode api ???
+      //#postMessageEvents: false,
+      //#focusBodyOnPageVisibilityChange: true,
+      transition: 'slide',
+      transitionSpeed: 'default',
+      backgroundTransition: 'fade',
+      //#pdfMaxPagesPerSlide: Number.POSITIVE_INFINITY,
+      //#pdfSeparateFragments: true,
+      //#pdfPageHeightOffset: -1,
+      viewDistance: 3,
+      //#mobileViewDistance: 2,
+      display: 'block',
+      //#hideInactiveCursor: true,
+      //#hideCursorTime: 5000
+
+      // Parallax Background
+      parallaxBackgroundImage: '',
+      parallaxBackgroundSize: '',
+      parallaxBackgroundHorizontal: 0,
+      parallaxBackgroundVertical: 0,
+
+      //Presentation Size
+      width: 960,
+			height: 700,
+			margin: 0.04,
+      minScale: 0.2,
+      maxScale: 2,
+      disableLayout: false,
+
+      audio: {
+        prefix: 'audio/', // audio files are stored in the "audio" folder
+        suffix: '.ogg', // audio files have the ".ogg" ending
+        textToSpeechURL: null, // the URL to the text to speech converter
+        defaultNotes: false, // use slide notes as default for the text to speech converter
+        defaultText: false, // use slide text as default for the text to speech converter
+        advance: 0, // advance to next slide after given time in milliseconds after audio has played, use negative value to not advance
+        autoplay: false, // automatically start slideshow
+        defaultDuration: 5, // default duration in seconds if no audio is available
+        defaultAudios: true, // try to play audios with names such as audio/1.2.ogg
+        playerOpacity: 0.05, // opacity value of audio player if unfocused
+        playerStyle: 'position: fixed; bottom: 4px; left: 25%; width: 50%; height:75px; z-index: 33;', // style used for container of audio controls
+        startAtFragment: false, // when moving to a slide, start at the current fragment or at the start of the slide
+      },
+      
+      chalkboard: { // font-awesome.min.css must be available
+        //src: "chalkboard/chalkboard.json",
+        storage: "chalkboard-demo",
+      },
+      
+			customcontrols: {
+					controls: [
+      						{
+						  id: 'toggle-overview',
+						  title: 'Toggle overview (O)',
+						  icon: '<i class="fa fa-th"></i>',
+						  action: 'Reveal.toggleOverview();'
+						}
+						,
+      {
+        icon: '<i class="fa fa-pen-square"></i>',
+        title: 'Toggle chalkboard (B)',
+        action: 'RevealChalkboard.toggleChalkboard();'
+      },
+      {
+        icon: '<i class="fa fa-pen"></i>',
+        title: 'Toggle notes canvas (C)',
+        action: 'RevealChalkboard.toggleNotesCanvas();'
+      }
+      
+				]
+			},
+			chart: {
+					defaults: { 
+						color: 'lightgray', // color of labels
+						scale: { 
+							beginAtZero: true, 
+							ticks: { stepSize: 1 },
+							grid: { color: "lightgray" } , // color of grid lines
+						},
+					},
+					line: { borderColor: [ "rgba(20,220,220,.8)" , "rgba(220,120,120,.8)", "rgba(20,120,220,.8)" ], "borderDash": [ [5,10], [0,0] ] }, 
+					bar: { backgroundColor: [ "rgba(20,220,220,.8)" , "rgba(220,120,120,.8)", "rgba(20,120,220,.8)" ]}, 
+					pie: { backgroundColor: [ ["rgba(0,0,0,.8)" , "rgba(220,20,20,.8)", "rgba(20,220,20,.8)", "rgba(220,220,20,.8)", "rgba(20,20,220,.8)"] ]},
+					radar: { borderColor: [ "rgba(20,220,220,.8)" , "rgba(220,120,120,.8)", "rgba(20,120,220,.8)" ]}, 
+			},
+			math: {
+				mathjax: 'https://cdn.jsdelivr.net/gh/mathjax/mathjax@2.7.8/MathJax.js',
+				config: 'TeX-AMS_HTML-full',
+				// pass other options into `MathJax.Hub.Config()`
+				TeX: { Macros: { RR: "{\\bf R}" } }
+				},
+				anything: [ 
+				{
+		className: "plot",
+		defaults: {width:500, height: 500, grid:true},
+		initialize: (function(container, options){ options.target = "#"+container.id; functionPlot(options) })
+	 },
+	 {
+		className: "chart",  
+		initialize: (function(container, options){ container.chart = new Chart(container.getContext("2d"), options);  })
+	 },
+	 {
+		className: "anything",
+		initialize: (function(container, options){ if (options && options.initialize) { options.initialize(container)} })
+	 },
+					],
+			// Learn about plugins: https://revealjs.com/plugins/
+			plugins: (window.location.search.match(/print-pdf/gi) ? printPlugins : plugins ) 
+		});
+			
+
+
+	    // Change chalkboard theme : 
+		function changeTheme(input) {
+			var config = {};
+			config.theme = input.value;
+			Reveal.getPlugin("RevealChalkboard").configure(config);
+			input.blur();
+		}
+
+		// // Handle the message inside the webview
+        // window.addEventListener('message', event => {
+
+        //     const message = event.data; // The JSON data our extension sent
+
+        //     switch (message.command) {
+        //         case 'refactor':
+        //             Reveal.toggleHelp();
+        //     }
+        // });
+
+		if (window.location.search.match(/print-pdf-now/gi)) {
+      		setTimeout(() => {
+				window.print();
+			  }, 2500);
+			
+    }
+</script>
+
+</body>
+
+</html>

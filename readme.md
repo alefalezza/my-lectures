@@ -13,3 +13,4 @@ Se hai fretta, qui trovi anche le versioni in pdf e html.
 - [Javascript](./javascript.md) ([pdf](./javascript.pdf), [html](./docs/javascript/index.html))
 - [Node.js](./nodejs.md) ([pdf](./nodejs.pdf), [html](./docs/nodejs/index.html))
 - [React](./react.md) ([pdf](./react.pdf), [html](./docs/react/index.html))
+- [Typescript](./typescript.md) ([pdf](./typescript.pdf), [html](./docs/typescript/index.html))
