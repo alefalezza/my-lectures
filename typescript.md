@@ -409,4 +409,9 @@ type MyComponentProps = {
 
 ## Approfondisci
 
-[https://react.dev/learn/typescript](https://react.dev/learn/typescript)
+[react.dev/learn/typescript](https://react.dev/learn/typescript)
+
+---
+
+
+[www.typescriptlang.org](https://www.typescriptlang.org/)
